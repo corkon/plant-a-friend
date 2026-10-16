@@ -13,7 +13,7 @@
 <link rel="icon" href="icons/icon-192.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}body{margin:0}</style>
 <title>Plant a friend</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Silkscreen:wght@400;700&display=swap">
 <style>
 /* Layout: eine Bildschirm-App. Kopfleiste oben, scrollender Garten, Tab-Leiste unten, Sheets von unten. */
 :root {
@@ -24,8 +24,8 @@
   --f-ok: #8fbe5a; --f-warn: #e8ae3a; --f-wilt: #cf9a72;
   --warn: #b3382c; --on-warn: #ffffff; --amber: #d98e12;
   --note: #fff0a6; --note-ink: #4e3f0c; --shade: rgba(60, 25, 10, .16);
-  --font: 'Pixelify Sans', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font: 'Silkscreen', 'Nunito', ui-rounded, system-ui, sans-serif;
+  --font-body: 'Nunito', ui-rounded, 'SF Pro Rounded', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -55,7 +55,7 @@
 html, body { height: 100%; }
 body {
   margin: 0; background: var(--bg); color: var(--ink);
-  font: 500 16px/1.4 var(--font-body); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent;
+  font: 600 16px/1.45 var(--font-body); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent;
 }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--head); z-index: 10; }
 body::after { content: ""; position: fixed; inset: auto 0 0; height: env(safe-area-inset-bottom, 0px); background: var(--bg2); z-index: 10; }
@@ -75,7 +75,7 @@ ul { padding: 0; list-style: none; }
 /* Kopfleiste */
 .top { flex: none; background: var(--head); padding: 12px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px)); }
 .bar { display: flex; align-items: center; gap: 6px; max-width: 720px; margin: 0 auto; padding: 6px 8px; background: var(--bg); }
-.bar h1 { flex: 1; min-width: 0; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: clamp(16px, 5.2vw, 24px); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--title); }
+.bar h1 { flex: 1; min-width: 0; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: clamp(19px, 5.8vw, 26px); font-weight: 800; letter-spacing: .01em; color: var(--title); }
 .icon-btn { width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 0; background: transparent; color: var(--title); }
 .icon-btn:active { transform: translateY(2px); }
 
@@ -83,7 +83,7 @@ ul { padding: 0; list-style: none; }
 main { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .wrap { max-width: 720px; margin: 0 auto; padding: 18px max(16px, env(safe-area-inset-right, 0px)) 28px max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-direction: column; gap: 22px; }
 .group { display: flex; flex-direction: column; gap: 14px; }
-.group-title { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--title); }
+.group-title { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; letter-spacing: .01em; color: var(--title); }
 .group-title .count { margin-left: auto; padding: 0 8px; background: var(--card); color: var(--ink); font-size: 13px; }
 .group.urgent .group-title { color: var(--warn); }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px 14px; }
@@ -96,7 +96,7 @@ main { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .streak svg { color: var(--amber); }
 .species { text-align: center; font-size: 13px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .name-row { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; text-align: center; }
-.fname { max-width: 100%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 17px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
+.fname { max-width: 100%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 19px; font-weight: 700; letter-spacing: .01em; }
 
 .pill { position: relative; flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 3px; min-width: 104px; padding: 2px 8px; overflow: hidden; background: var(--btn); font-size: 12px; font-weight: 700; white-space: nowrap; }
 .pill i { position: absolute; inset: 0 auto 0 0; background: var(--f-ok); }
@@ -108,7 +108,7 @@ main { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 /* Buttons */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 6px 16px; margin-bottom: 5px;
-  border: 0; background: var(--btn); color: var(--ink); font-weight: 700; letter-spacing: .03em; text-decoration: none; text-align: center;
+  border: 0; background: var(--btn); color: var(--ink); font-weight: 700; letter-spacing: .01em; text-decoration: none; text-align: center;
   box-shadow: 0 -2px 0 0 var(--line), 0 2px 0 0 var(--line), -2px 0 0 0 var(--line), 2px 0 0 0 var(--line), 0 5px 0 0 var(--line);
 }
 .btn:active { transform: translateY(3px); box-shadow: 0 -2px 0 0 var(--line), 0 2px 0 0 var(--line), -2px 0 0 0 var(--line), 2px 0 0 0 var(--line), 0 2px 0 0 var(--line); }
@@ -121,7 +121,7 @@ main { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 
 /* Tab-Leiste */
 .tabs { flex: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; background: var(--bg2); border-top: 3px solid var(--line); padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); }
-.tab { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px 9px; border: 0; background: transparent; color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.tab { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px 9px; border: 0; background: transparent; color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: .01em; }
 .tab .ic { height: 27px; display: flex; align-items: flex-end; }
 .tab[aria-current="page"] { background: var(--green); color: var(--on-green); }
 
@@ -143,13 +143,13 @@ main { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 @keyframes rise { from { transform: translateY(28px); opacity: .3; } to { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .sheet { animation: none; } }
 .sheet-head { flex: none; display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 16px; border-bottom: 3px solid var(--line); }
-.sheet-head h2 { flex: 1; min-width: 0; font-size: 19px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--title); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sheet-head h2 { flex: 1; min-width: 0; font-size: 19px; font-weight: 700; letter-spacing: .01em; color: var(--title); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sheet-head .icon-btn { color: var(--ink); }
 .sheet-body { min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; padding: 16px 16px 14px; }
 
 /* Formulare */
 .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.lbl { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }
+.lbl { font-size: 14px; font-weight: 700; letter-spacing: .01em; color: var(--ink2); }
 input[type="text"], input[type="number"], input[type="date"], textarea {
   width: 100%; min-height: 44px; padding: 8px 10px; border: 0; border-radius: 0; background: var(--btn); color: var(--ink);
   box-shadow: 0 -2px 0 0 var(--line), 0 2px 0 0 var(--line), -2px 0 0 0 var(--line), 2px 0 0 0 var(--line);
@@ -162,7 +162,13 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
 .seg-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 48px; padding: 6px 4px; border: 0; background: var(--btn); color: var(--ink); font-weight: 700; text-align: center; box-shadow: 0 -2px 0 0 var(--line), 0 2px 0 0 var(--line), -2px 0 0 0 var(--line), 2px 0 0 0 var(--line); }
 .seg-btn small { font-size: 12px; font-weight: 500; }
 .seg-btn.on { background: var(--green); color: var(--on-green); }
+.picker-wrap { display: flex; flex-direction: column; gap: 14px; max-height: 340px; overflow-y: auto; padding: 4px 4px 4px 0; overscroll-behavior: contain; }
+.pgroup h4 { margin: 0 0 8px; font-size: 13px; font-weight: 800; letter-spacing: .02em; color: var(--ink2); }
 .picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.rare { display: block; margin-top: -1px; padding: 0 6px; background: var(--note); color: var(--note-ink); font-size: 10px; font-weight: 800; letter-spacing: .03em; }
+.pick.lock { opacity: .55; }
+.pick.lock .sprite { filter: grayscale(1); }
+.pots .rare { background: var(--btn); color: var(--ink2); }
 .pick { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 2px 6px; border: 0; background: var(--card); color: var(--ink); font-size: 12px; font-weight: 700; text-align: center; box-shadow: 0 -2px 0 0 transparent, 0 2px 0 0 transparent, -2px 0 0 0 transparent, 2px 0 0 0 transparent; }
 .pick .sprite { max-width: 72px; }
 .pick[aria-pressed="true"] { box-shadow: 0 -3px 0 0 var(--ink), 0 3px 0 0 var(--ink), -3px 0 0 0 var(--ink), 3px 0 0 0 var(--ink); background: var(--floor); }
@@ -173,10 +179,10 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
 .d-top { display: flex; gap: 14px; align-items: center; }
 .d-top .sprite-box { flex: none; width: 128px; background: var(--card); }
 .d-info { min-width: 0; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
-.d-info h3 { font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; overflow-wrap: anywhere; }
+.d-info h3 { font-size: 18px; font-weight: 700; letter-spacing: .01em; overflow-wrap: anywhere; }
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .stat { padding: 8px 10px; background: var(--card); }
-.stat dt { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }
+.stat dt { font-size: 12px; letter-spacing: .01em; color: var(--ink2); }
 .stat dd { font-size: 17px; font-weight: 700; }
 .hist li { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 2px dotted var(--line); font-size: 15px; }
 .hist li:last-child { border-bottom: 0; }
@@ -186,7 +192,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
 
 /* Abzeichen */
 .lvl { display: flex; flex-direction: column; gap: 10px; padding: 14px; background: var(--card); }
-.lvl h3 { font-size: 24px; font-weight: 700; text-transform: uppercase; }
+.lvl h3 { font-size: 24px; font-weight: 700; }
 .meter { height: 16px; background: var(--btn); }
 .meter i { display: block; height: 100%; background: var(--green); }
 .hearts { display: flex; gap: 6px; align-items: center; }
@@ -194,17 +200,17 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
 .heart.on { color: #d6483a; opacity: 1; }
 .badges { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px 14px; }
 .badge { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px; background: var(--card); }
-.badge h3 { font-size: 16px; font-weight: 700; }
+.badge h3 { font-size: 13px; font-weight: 700; }
 .badge p { font-size: 13px; color: var(--ink2); }
-.badge svg { color: var(--amber); }
-.badge.locked { opacity: .6; }
-.badge.locked svg { color: var(--ink2); }
+.bicon { width: 80px; height: 80px; image-rendering: pixelated; }
+.badge.locked { opacity: .7; }
+.badge.locked .bicon { filter: grayscale(1); opacity: .45; }
 
 /* Archiv */
 .arch { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px; background: var(--card); }
 .arch .sprite { width: 64px; flex: none; }
 .arch .who { flex: 1 1 120px; min-width: 0; }
-.arch .who b { display: block; font-size: 17px; text-transform: uppercase; overflow-wrap: anywhere; }
+.arch .who b { display: block; font-size: 17px; overflow-wrap: anywhere; }
 .arch .btns { display: flex; gap: 10px; flex-wrap: wrap; }
 
 .json { min-height: 120px; font-size: 12px; font-family: ui-monospace, Menlo, Consolas, monospace; }
@@ -216,9 +222,26 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
 #toast { position: fixed; left: 50%; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); z-index: 30; max-width: min(92vw, 420px); padding: 8px 14px; transform: translateX(-50%); background: var(--ink); color: var(--bg); font-weight: 700; text-align: center; pointer-events: none; opacity: 0; }
 #toast.show { opacity: 1; }
 
-/* Pixel-Schrift nur für große Überschriften und Namen, alles andere in gut lesbarer Systemschrift */
-.bar h1, .group-title, .fname, .sheet-head h2, .d-info h3, .lvl h3, .stat dd, .streak, .empty h2 { font-family: var(--font); }
-.pill, .btn, .tab, .lbl { letter-spacing: .02em; }
+
+/* Pixel-Schrift nur für Überschriften, Namen und Kategorien: etwas größer, kräftiger und mit mehr Abstand, damit sie gut lesbar bleibt. */
+.bar h1, .group-title, .fname, .sheet-head h2, .d-info h3, .lvl h3, .badge h3, .stat dd, .streak, .empty h2, .pgroup h4 {
+  font-family: var(--font); font-weight: 700; letter-spacing: .02em; font-synthesis: none; text-transform: uppercase;
+}
+.streak { font-family: var(--font-body); font-weight: 800; letter-spacing: 0; text-transform: none; }
+.bar h1 { font-size: clamp(17px, 5vw, 22px); letter-spacing: .03em; }
+.group-title { font-size: 15px; }
+.fname { font-size: 15px; line-height: 1.2; }
+.sheet-head h2 { font-size: 17px; }
+.d-info h3 { font-size: 18px; line-height: 1.15; }
+.lvl h3 { font-size: 20px; }
+.badge h3 { font-size: 13px; line-height: 1.2; }
+.stat dd { font-size: 16px; }
+.streak { font-size: 13px; }
+.pgroup h4 { font-size: 12px; }
+
+/* Knöpfe in Pixelschrift */
+.btn { font-family: var(--font); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; font-size: 13px; font-synthesis: none; }
+.btn.sm { font-size: 12px; }
 
 </style>
 <div id="app">
@@ -246,15 +269,18 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
   const frac = x => x - Math.floor(x);
   const rnd = (i, s) => frac(Math.sin(i * 12.9898 + (s || 0) * 78.233) * 43758.5453);
   const rad = d => d * Math.PI / 180;
+  /* Je staerker die Pflanze welkt, desto weniger Blaetter bleiben dran. */
+  const keep = (n, w) => Math.max(1, Math.round(n * (1 - 0.6 * (w || 0))));
+  const pick = (arr, w) => { const k = keep(arr.length, w); return k >= arr.length ? arr : arr.filter((_, i) => { const j = k === 1 ? Math.floor((arr.length - 1) / 2) : null; return k === 1 ? i === j : (function () { for (let q = 0; q < k; q++) if (Math.round(q * (arr.length - 1) / (k - 1)) === i) return true; return false; })(); }); };
 
   class Grid {
-    constructor() { this.c = new Array(W * H).fill(null); this.k = new Array(W * H).fill(0); this.potO = '#6e3219'; }
+    constructor() { this.c = new Array(W * H).fill(null); this.k = new Array(W * H).fill(0); this.potO = '#6e3219'; this.dy = 0; }
     set(x, y, col, k) {
-      x = Math.round(x); y = Math.round(y);
+      x = Math.round(x); y = Math.round(y) - this.dy;
       if (!col || x < 0 || y < 0 || x >= W || y >= H) return;
       this.c[y * W + x] = col; this.k[y * W + x] = k || 1;
     }
-    get(x, y) { return (x < 0 || y < 0 || x >= W || y >= H) ? null : this.c[y * W + x]; }
+    get(x, y) { y -= this.dy; return (x < 0 || y < 0 || x >= W || y >= H) ? null : this.c[y * W + x]; }
   }
 
   const rect = (g, x, y, w, h, col, k) => { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) g.set(x + i, y + j, col, k); };
@@ -295,32 +321,75 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     cream: { m: '#f1e3d3', d: '#d3bda7', l: '#fff7ec', o: '#7a4a30' },
     mustard: { m: '#e4b04a', d: '#bb8a2f', l: '#f4cd78', o: '#6e4a14' }
   };
+  Object.assign(POTS, {
+    mint: { m: '#8fd6bf', d: '#63b39b', l: '#c4efe2', o: '#2f6a58' },
+    sky: { m: '#7fb6e8', d: '#5a90c4', l: '#b5d9f6', o: '#2a4f78' },
+    berry: { m: '#c2506f', d: '#9a3652', l: '#e283a0', o: '#5a1c30' },
+    violet: { m: '#a98bd8', d: '#8368b5', l: '#cfbaf0', o: '#42306e' },
+    rainbow: { m: '#f6f1e8', d: '#d6cdbd', l: '#ffffff', o: '#6e5a4a' }
+  });
+  /* Besondere Toepfe, die man ueber den besten Streak freischaltet (Bedingungen stehen in logic.js). */
+  const SKIN_STYLE = {
+    mint: { pot: 'mint', deco: 'dots', shape: 'tall' }, sky: { pot: 'sky', deco: 'stripe2', shape: 'bowl' }, berry: { pot: 'berry', deco: '', shape: 'cup' },
+    violet: { pot: 'violet', deco: 'dots', shape: 'vase' }, rainbow: { pot: 'rainbow', deco: 'rainbow', shape: 'bucket' }
+  };
   const SOIL_M = '#55361f', SOIL_D = '#3f2819';
 
-  function drawPot(g, style, deco) {
-    const P = POTS[style]; g.potO = P.o;
-    rect(g, 16, 33, 16, 1, SOIL_M, 2);
-    rect(g, 15, 34, 18, 1, SOIL_D, 2);
-    rect(g, 14, 35, 20, 1, P.l, 2);
-    rect(g, 14, 36, 20, 1, P.m, 2);
-    rect(g, 14, 37, 20, 1, P.d, 2);
-    const wAt = y => 16 - Math.round((y - 38) / 2);
-    for (let y = 38; y <= 46; y++) {
+  /* Topfformen: rim = Breite des oberen Rands, rows(y) = Breite des Koerpers in Zeile y, yEnd = letzte Zeile. */
+  const POT_SHAPES = {
+    std: { rim: 20, rows: y => 16 - Math.round((y - 38) / 2), yEnd: 46 },
+    tall: { rim: 16, rows: () => 14, yEnd: 47 },
+    bowl: { rim: 26, rows: y => [24, 22, 20, 18, 16, 14][y - 38] || 14, yEnd: 43 },
+    cup: { rim: 18, rows: y => 17 - Math.round((y - 38) / 2), yEnd: 44, extra(g, P, x1) {
+      rect(g, x1, 39, 3, 1, P.d, 2); rect(g, x1 + 2, 40, 2, 3, P.d, 2); rect(g, x1, 43, 3, 1, P.d, 2);
+      rect(g, 11, 45, 26, 1, P.l, 2); rect(g, 12, 46, 24, 1, P.d, 2);
+    } },
+    vase: { rim: 14, rows: y => [14, 16, 18, 20, 20, 18, 16, 14, 12][y - 38] || 12, yEnd: 46 },
+    bucket: { rim: 20, rows: y => 19 - Math.round((y - 38) / 2), yEnd: 46 }
+  };
+
+  function drawPot(g, style, deco, shape) {
+    const P = POTS[style], SH = POT_SHAPES[shape] || POT_SHAPES.std; g.potO = P.o;
+    const cx = (w, k) => 24 - w / 2;
+    rect(g, cx(SH.rim - 4), 33, SH.rim - 4, 1, SOIL_M, 2);
+    rect(g, cx(SH.rim - 2), 34, SH.rim - 2, 1, SOIL_D, 2);
+    rect(g, cx(SH.rim), 35, SH.rim, 1, P.l, 2);
+    rect(g, cx(SH.rim), 36, SH.rim, 1, P.m, 2);
+    rect(g, cx(SH.rim), 37, SH.rim, 1, P.d, 2);
+    const wAt = SH.rows;
+    let lastX1 = 0;
+    for (let y = 38; y <= SH.yEnd; y++) {
       const w = wAt(y), x0 = Math.round(24 - w / 2);
       rect(g, x0, y, w, 1, P.m, 2);
       rect(g, x0 + 1, y, 2, 1, P.l, 2);
       rect(g, x0 + w - 3, y, 3, 1, P.d, 2);
+      if (y === 39) lastX1 = x0 + w;
     }
+    if (SH.extra) SH.extra(g, P, lastX1);
+    const inside = (x, y) => g.get(x, y) === P.m;
     if (deco === 'dots') {
       for (let i = 0; i < 18; i++) {
         const x = 17 + Math.floor(rnd(i, 3) * 13), y = 38 + Math.floor(rnd(i, 4) * 9);
-        if (g.get(x, y) === P.m) g.set(x, y, P.d, 2);
+        if (inside(x, y)) g.set(x, y, P.d, 2);
       }
     }
     if (deco === 'band') {
       for (let y = 40; y <= 42; y++) {
         const w = wAt(y), x0 = Math.round(24 - w / 2);
         for (let x = x0 + 3; x < x0 + w - 3; x++) g.set(x, y, (x + y) % 2 ? P.l : P.d, 2);
+      }
+    }
+    if (deco === 'stripe2') {
+      for (let y = 40; y <= 41; y++) {
+        const w = wAt(y), x0 = Math.round(24 - w / 2);
+        for (let x = x0 + 1; x < x0 + w - 1; x++) g.set(x, y, P.d, 2);
+      }
+    }
+    if (deco === 'rainbow') {
+      const cols = ['#e45b5b', '#f2a33a', '#f4dd5a', '#6cc070', '#5b9ee4', '#9a6fd8'];
+      for (let i = 0; i < 6; i++) {
+        const y = 38 + i, w = wAt(y), x0 = Math.round(24 - w / 2);
+        for (let x = x0 + 1; x < x0 + w - 1; x++) g.set(x, y, cols[i], 2);
       }
     }
     if (deco === 'stripe') {
@@ -361,7 +430,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
 
   function pilea(g, st, w, P) {
     if (st === 0) return sprout(g, w, P);
-    const N = [0, 4, 7, 11][st], R = [0, 2.4, 3.1, 3.6][st], D0 = [0, 7, 8, 9][st], D1 = [0, 11, 17, 24][st];
+    const N = Math.max(2, keep([0, 4, 7, 11][st], w)), R = [0, 2.4, 3.1, 3.6][st], D0 = [0, 7, 8, 9][st], D1 = [0, 11, 17, 24][st];
     const L = [];
     for (let i = 0; i < N; i++) {
       const t = i / (N - 1) * 2 - 1;
@@ -384,7 +453,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
   const HOLES = [[0.15, 0.42, 1.4], [-0.3, 0.36, 1.3], [0.5, 0.3, 1.1]];
   function monstera(g, st, w, P) {
     if (st === 0) return sprout(g, w, P);
-    const N = [0, 2, 4, 5][st], A = [0, 5, 7, 8.5][st], DD = [0, 9, 13, 16][st];
+    const N = keep([0, 2, 4, 5][st], w), A = [0, 5, 7, 8.5][st], DD = [0, 9, 13, 16][st];
     const L = [];
     for (let i = 0; i < N; i++) {
       const t = N === 1 ? 0 : i / (N - 1) * 2 - 1;
@@ -410,7 +479,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
 
   function calathea(g, st, w, P) {
     if (st === 0) return sprout(g, w, P);
-    const N = [0, 3, 5, 7][st], A = [0, 6, 9, 11][st], DD = [0, 4, 6, 7][st];
+    const N = keep([0, 3, 5, 7][st], w), A = [0, 6, 9, 11][st], DD = [0, 4, 6, 7][st];
     const L = [];
     for (let i = 0; i < N; i++) {
       const t = N === 1 ? 0 : i / (N - 1) * 2 - 1;
@@ -453,7 +522,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     }
   }
   function snake(g, st, w, P) {
-    BLADES[st].slice().sort((p, q) => Math.abs(q[0]) - Math.abs(p[0]))
+    pick(BLADES[st], w).slice().sort((p, q) => Math.abs(q[0]) - Math.abs(p[0]))
       .forEach(b => blade(g, 24 + b[0] * 0.12, b[0], b[1] * (1 - 0.2 * w), b[2], w, P));
   }
 
@@ -511,8 +580,8 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
   }
   function pearls(g, st, w, P) {
     const r = 1.55 * (1 - 0.3 * w);
-    MOUND[st].forEach(p => pearl(g, p[0], p[1] + w * 1.5, r, P));
-    STRANDS[st].forEach((sd, n) => {
+    pick(MOUND[st], w).forEach(p => pearl(g, p[0], p[1] + w * 1.5, r, P));
+    pick(STRANDS[st], w).forEach((sd, n) => {
       const len = sd[1] * (1 - 0.3 * w);
       let prev = null;
       for (let s = 0; s <= len; s += 3.2) {
@@ -524,19 +593,524 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     });
   }
 
-  const SPECIES = {
-    monstera: { label: 'Monstera Adansonii', pot: 'cream', deco: 'dots', draw: monstera },
-    snake: { label: 'Bogenhanf', pot: 'terra', deco: '', draw: snake },
-    pilea: { label: 'Pilea Peperomioides', pot: 'mustard', deco: '', draw: pilea },
-    calathea: { label: 'Calathea Orbifolia', pot: 'cream', deco: '', draw: calathea },
-    pearls: { label: 'Erbsenpflanze', pot: 'cream', deco: 'stripe', after: true, draw: pearls },
-    cactus: { label: 'Kaktus', pot: 'terra', deco: 'band', draw: cactus }
+  /* ---------- Erweiterung: frei einstellbare Blattpflanzen und Ranker ---------- */
+  Object.assign(POTS, {
+    sage: { m: '#a9c2a0', d: '#86a27e', l: '#c9ddc0', o: '#47643f' },
+    blush: { m: '#e8bfb4', d: '#c99a8f', l: '#f7dcd3', o: '#7a4a44' },
+    charcoal: { m: '#6b6f78', d: '#4a4d55', l: '#8d919b', o: '#26282e' },
+    sand: { m: '#e6d3b0', d: '#c9b38c', l: '#f4e8cf', o: '#6e5a3a' }
+  });
+  const wl = (hex, w) => mix(hex, '#8a7a3a', Math.min(1, w * 0.9));
+  const hash2 = (a, b) => frac(Math.sin(a * 12.9898 + b * 78.233) * 43758.5453);
+  const SHAPES = {
+    egg: u => Math.sqrt(1 - u * u) * (1 - 0.22 * u),
+    oval: u => Math.sqrt(1 - u * u),
+    heart: u => Math.sqrt(1 - u * u) * (1.08 - 0.5 * Math.max(0, u)),
+    arrow: u => Math.pow(Math.max(0, 1 - u * u), 0.7) * (1.15 - 0.6 * Math.max(0, u + 0.15)),
+    lance: u => Math.pow(Math.max(0, 1 - u * u), 0.75) * (1 - 0.1 * u),
+    shield: u => Math.sqrt(Math.max(0, 1 - u * u)) * (1.05 - 0.25 * Math.max(0, u)),
+    triheart: u => Math.min(Math.sqrt(Math.max(0, 1 - u * u)) * 1.05, (1 - u) * 0.62 + 0.02),
+    pointheart: u => Math.pow(Math.max(0, 1 - u * u), 0.7) * (1.12 - 0.45 * Math.max(0, u))
+  };
+  const PATTERNS = {
+    plain: (u, v, av, C) => (av < 0.08 ? C.l : ((v > 0.32 || u < -0.6) ? C.s : C.b)),
+    veins: (u, v, av, C) => { if (av < 0.07) return C.l; return frac(u * 3.4 - av * 2.6) < 0.16 ? C.l : (v > 0.4 ? C.s : C.b); },
+    pin: (u, v, av, C) => { if (av < 0.07) return C.x; return frac(u * 4 - av * 3) < 0.14 ? C.x : (v > 0.4 ? C.s : C.b); },
+    speckle: (u, v, av, C) => { if (av < 0.07) return C.l; if (hash2(Math.floor(u * 8), Math.floor(v * 8)) > 0.78) return C.x; return v > 0.35 ? C.s : C.b; },
+    blotch: (u, v, av, C) => { if (av < 0.06) return C.l; const q = Math.sin(u * 4.1 + v * 3.3) * Math.cos(v * 5.2 - u * 2.1); return q > 0.3 ? C.x : (v > 0.4 ? C.s : C.b); },
+    marble: (u, v, av, C) => { if (av < 0.06) return C.l; const q = Math.sin(u * 5.3 + v * 2.7) * Math.cos(v * 4.4 - u * 3.1); return q > 0.12 ? C.x : (v > 0.4 ? C.s : C.b); }
+  };
+  const defCol = P => ({ b: P.m, s: P.d, l: P.l, x: P.l });
+
+  function leafShapeFn(cfg, A, b, C) {
+    const sf = SHAPES[cfg.shape], pat = PATTERNS[cfg.pat || 'plain'];
+    return (u, v) => {
+      if (u < -1 || u > 1) return null;
+      const wm = sf(u) * (1 + (cfg.wave || 0) * Math.sin(u * 13)), av = Math.abs(v);
+      if (av > wm) return null;
+      const nz = cfg.notch === true ? 0.78 : cfg.notch;
+      if (nz && u < -nz && av < (-nz - u) * 1.7) return null;
+      const sl = cfg.slits === true ? { us: [-0.55, -0.22, 0.1, 0.4], d: 0.3, w: 0.065, lean: 0.6 } : cfg.slits;
+      if (sl && A >= (cfg.slitMin || 6) && av > sl.d) for (const us of sl.us) if (Math.abs(u - (us + (av - sl.d) * sl.lean)) < sl.w) return null;
+      if (cfg.holes && A >= 6) for (const hh of HOLES) if (Math.hypot((u - hh[0]) * A, (av - hh[1]) * b) < hh[2]) return null;
+      return pat(u, v, av, C);
+    };
+  }
+
+  function leafy(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const C = cfg.col ? cfg.col(P, w) : defCol(P);
+      const N = keep(cfg.N[st], w), A = cfg.A[st], DD = cfg.DD[st], b = A * (cfg.aspect || 0.78), L = [];
+      for (let i = 0; i < N; i++) {
+        const t = N === 1 ? 0 : i / (N - 1) * 2 - 1;
+        let th = t * cfg.spread * 0.9 + (rnd(i, cfg.seed || 5) - 0.5) * 10;
+        const sg = th < 0 ? -1 : 1;
+        th += sg * w * 38;
+        const d = DD * (0.7 + 0.3 * (1 - Math.abs(t))) * (0.85 + 0.15 * rnd(i, 6)) * (1 - 0.2 * w) * (1 + (cfg.jit || 0) * (rnd(i, 7) - 0.5) * 2);
+        const lim = x => Math.max(A * 0.75 + 1, Math.min(47 - A * 0.75, x));
+        const sx = lim(24 + Math.sin(rad(th)) * d), sy = BASE - Math.cos(rad(th)) * d;
+        const ph = th * (cfg.turn || 1) + sg * w * 30;
+        L.push({ sx, sy, ph, cx: lim(sx + Math.sin(rad(ph)) * A * 0.85), cy: sy - Math.cos(rad(ph)) * A * 0.85 });
+      }
+      L.sort((p, q) => p.cy - q.cy);
+      L.forEach(p => line(g, 24, BASE, p.sx, p.sy, cfg.stem ? cfg.stem(P, w) : P.s));
+      L.forEach(p => shape(g, p.cx, p.cy, A, b, rad(p.ph), leafShapeFn(cfg, A, b, C)));
+      if (cfg.after) cfg.after(g, st, w, P, C);
+    };
+  }
+
+  const MV = [[], [[21, 32, -35], [27, 32, 35]],
+    [[19, 33, -60], [29, 33, 60]],
+    [[17, 33, -70], [31, 33, 70], [24, 29, 0]]];
+  const SV = [[], [[15, 5, -1], [33, 6, 1]], [[14, 10, -1], [34, 11, 1]],
+    [[13, 14, -1], [35, 14, 1], [31, 8, 1]]];
+  function vines(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const C = cfg.col ? cfg.col(P, w) : defCol(P);
+      const leaf = (x, y, ph, A) => { if (cfg.stamp) return cfg.stamp(g, x, y, ph, C, w);
+         const b = A * (cfg.asp || 0.84); shape(g, x, y, A, b, rad(ph), cfg.leafFn ? cfg.leafFn(A, b, C) : leafShapeFn({ shape: cfg.shape || 'heart', notch: cfg.notch === undefined ? 0.7 : cfg.notch, pat: cfg.pat }, A, b, C)); };
+      pick(MV[st].slice(0, cfg.nm || 9), w).forEach(m => leaf(m[0], m[1] + w * 1.5, cfg.mph ? (m[2] < 0 ? -cfg.mph : cfg.mph) : m[2] + (m[2] < 0 ? -1 : 1) * w * 30, [0, 3.6, 4.0, 4.2][st] * (cfg.ma || 1) * (1 - 0.1 * w)));
+      pick(SV[st].slice(0, cfg.ns || 9), w).forEach((sd, n) => {
+        const len = sd[1] * (cfg.lenm || 1) * (1 - 0.3 * w);
+        let prev = null;
+        const wire = cfg.wire ? cfg.wire(P, w) : P.s;
+        for (let s = 0; s <= len; s += 2) {
+          const x = sd[0] + sd[2] * 0.9 * Math.sin(s * 0.5 + n), y = 35 + s;
+          if (prev) line(g, prev[0], prev[1], x, y, wire);
+          prev = [x, y];
+        }
+        let side = n % 2 ? 1 : -1;
+        for (let s = 4; s <= len; s += Math.round((cfg.step || 6) * (1 + 1.2 * w))) {
+          const x = sd[0] + sd[2] * 0.9 * Math.sin(s * 0.5 + n);
+          leaf(x + side * 2.6, 35 + s, side * (125 + 20 * w), 3.0 * (cfg.la || 1) * (1 - 0.15 * w));
+          side = -side;
+        }
+      });
+    };
+  }
+
+
+  /* ---------- Etappe 2: Staemme, Rohre, Fiederblaetter ---------- */
+  Object.assign(SHAPES, {
+    violin: u => Math.sqrt(Math.max(0, 1 - u * u)) * (0.42 + 0.42 * (u + 1) - 0.3 * Math.exp(-Math.pow((u + 0.1) / 0.3, 2))),
+    pointoval: u => Math.pow(Math.max(0, 1 - u * u), 0.6) * (1.08 - 0.3 * Math.max(0, u)),
+    paddle: u => Math.pow(Math.max(0, 1 - u * u), 0.55) * (1.15 - 0.25 * u),
+    round: u => Math.sqrt(Math.max(0, 1 - u * u))
+  });
+  Object.assign(PATTERNS, {
+    maranta: (u, v, av, C) => {
+      if (av < 0.07) return C.l;
+      if (av > 0.2 && av < 0.55 && frac(u * 1.8 + 0.2) < 0.5) return C.s;
+      if (av > 0.62 && frac(u * 3 - av * 2) < 0.14) return C.x;
+      return C.b;
+    },
+    melon: (u, v, av, C) => {
+      const t = Math.atan2(v, u + 1.05);
+      if (frac(t * 3.4 + 0.5) < 0.4) return C.x;
+      return C.b;
+    },
+    center: (u, v, av, C) => {
+      if (av < 0.06) return C.l;
+      if (av < 0.55 * Math.sqrt(Math.max(0, 1 - u * u)) && u > -0.55) return C.x;
+      return C.b;
+    }
+  });
+
+  function stemmed(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const C = cfg.col ? cfg.col(P, w) : defCol(P);
+      const TH = cfg.TH[st], N = keep(cfg.N[st], w), A = cfg.A[st], tc = mix(P.s, '#8a6a3f', 0.55);
+      const topx = 24 + w * 2, topy = BASE - TH + w * 3;
+      line(g, 24, BASE, topx, topy, tc); line(g, 25, BASE, topx + 1, topy, tc);
+      for (let i = 0; i < N; i++) {
+        const t = N === 1 ? 1 : 0.2 + 0.8 * i / (N - 1), side = i % 2 ? 1 : -1, top = i === N - 1;
+        const ay = BASE - TH * t + w * 3 * t, ax = 24 + (topx - 24) * t;
+        const ph = top ? w * 20 : side * (cfg.out + (1 - t) * 12 + w * 35);
+        const Ai = A * (top ? 0.95 : 1) * (1 - 0.12 * w), b = Ai * (cfg.aspect || 0.6);
+        shape(g, ax + Math.sin(rad(ph)) * Ai * 0.92, ay - Math.cos(rad(ph)) * Ai * 0.92, Ai, b, rad(ph), leafShapeFn(cfg, Ai, b, C));
+      }
+    };
+  }
+
+  function canes(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const HH = [0, 9, 15, 21][st], offs = pick([[], [-2, 2], [-4, 0, 4], [-6, -2, 2, 6]][st], w), C = defCol(P);
+      const cc = mix(P.m, P.l, 0.35);
+      offs.forEach((o, i) => {
+        const h = HH * (0.82 + 0.18 * rnd(i, 3)) * (1 - 0.15 * w), x0 = 24 + o * 0.4, x1 = 24 + o * 1.6 + w * (o < 0 ? -2 : 2), y1 = BASE - h;
+        line(g, x0, BASE, x1, y1, cc); line(g, x0 + 1, BASE, x1 + 1, y1, P.m);
+        for (let q = 3; q < h; q += 4) { const x = x0 + (x1 - x0) * q / h; g.set(x, BASE - q, P.d, 1); g.set(x + 1, BASE - q, P.d, 1); }
+        const A = [0, 3.5, 4.8, 6][st];
+        [-1, 0, 1].forEach(k => {
+          const ph = k * (52 + w * 30), lx = x1 + 0.5 + Math.sin(rad(ph)) * A * 0.9, ly = y1 - Math.cos(rad(ph)) * A * 0.9;
+          shape(g, lx, ly, A, A * 0.24, rad(ph), leafShapeFn({ shape: 'lance', pat: 'plain' }, A, A * 0.24, C));
+        });
+      });
+    };
+  }
+
+  function pinnate(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const N = keep((cfg.Ns || [0, 2, 3, 3])[st], w), LEN = (cfg.LENs || [0, 11, 16, 21])[st], C = defCol(P), sc = cfg.stemCol ? cfg.stemCol(P, w) : mix(P.m, P.l, 0.3);
+      for (let i = 0; i < N; i++) {
+        const side = i % 2 ? 1 : -1, a0 = side * ((cfg.a0 || 16) + (i >> 1) * (cfg.a1 || 26)), pts = [];
+        let x = 24, y = BASE, a = a0;
+        const curv = side * cfg.curv * (1 + w * 1.4), L = Math.round(LEN * (1 - 0.2 * w));
+        for (let q = 0; q < L; q++) { x += Math.sin(rad(a)); y -= Math.cos(rad(a)); a += curv; pts.push([x, y, a]); }
+        pts.forEach((p, q) => { g.set(p[0], p[1], sc, 1); if (q < L * 0.6) g.set(p[0] + 1, p[1], sc, 1); });
+        for (let q = cfg.start || 7; q < pts.length; q += Math.round((cfg.step || 5) * (1 + 1.3 * w))) {
+          const p = pts[q], r = (cfg.r0 || 2.8) - ((cfg.r0 || 2.8) - (cfg.r1 || 1.6)) * q / pts.length, ra = cfg.asp || 0.64;
+          [-1, 1].forEach(sd => {
+            const ang = p[2] + sd * (cfg.ang || 52), cx = p[0] + Math.sin(rad(ang)) * r * 0.9, cy = p[1] - Math.cos(rad(ang)) * r * 0.9;
+            shape(g, cx, cy, r, r * ra, rad(ang), leafShapeFn({ shape: cfg.shp || 'oval', pat: 'plain' }, r, r * ra, cfg.col ? cfg.col(P, w) : C));
+          });
+        }
+        const q = pts[pts.length - 1]; if (q) shape(g, q[0] + Math.sin(rad(q[2])) * 2, q[1] - Math.cos(rad(q[2])) * 2, cfg.tipA || 3, (cfg.tipA || 3) * (cfg.tipR || 0.66), rad(q[2]), leafShapeFn({ shape: cfg.shp || 'oval', pat: 'plain' }, cfg.tipA || 3, (cfg.tipA || 3) * (cfg.tipR || 0.66), cfg.col ? cfg.col(P, w) : C));
+      }
+    };
+  }
+
+  function lilyFlowers(g, st, w, P) {
+    if (st < 2) return;
+    const F = pick(st === 2 ? [[30, 12, 10]] : [[18, 9, -8], [31, 7, 9], [24, 4, 0]], w);
+    const wh = wl('#f8f5ea', w), sh = wl('#d9d4bd', w), yl = wl('#e8d36a', w);
+    F.forEach(([fx, fy, t]) => {
+      const dy = w * 4;
+      line(g, 24 + (t < 0 ? -1 : 1), BASE, fx, fy + 4 + dy, P.s);
+      shape(g, fx, fy + dy, 4.6 * (1 - 0.1 * w), 2.7, rad(t + w * 40), (u, v) => {
+        const wm = Math.pow(Math.max(0, 1 - u * u), 0.7); if (Math.abs(v) > wm) return null;
+        if (Math.abs(v) < 0.12 && u > -0.4 && u < 0.5) return yl;
+        return v > 0.35 ? sh : wh;
+      });
+    });
+  }
+
+
+  /* ---------- Etappe 3 ---------- */
+  Object.assign(SHAPES, {
+    blade: u => Math.min(1, (1 - u) * 0.55) * (u > -1 ? 1 : 0)
+  });
+  Object.assign(PATTERNS, {
+    trad: (u, v, av, C) => (av < 0.3 && u > -0.8 ? C.x : C.b),
+    bands: (u, v, av, C) => (frac(u * 3.2 + 0.3) < 0.28 && av < 0.85 ? C.x : (v > 0.3 ? C.s : C.b))
+  });
+
+  function ribbon(g, pts, w0, w1, edge, center) {
+    pts.forEach((p, i) => {
+      const t = i / Math.max(1, pts.length - 1), wd = w0 + (w1 - w0) * t, px = Math.cos(rad(p[2])), py = Math.sin(rad(p[2]));
+      for (let k = -wd; k <= wd + 0.01; k += 0.5) g.set(p[0] + px * k, p[1] + py * k, Math.abs(k) < 0.55 && center ? center : edge, 1);
+    });
+  }
+  function walk(x, y, a, len, curv) {
+    const pts = []; for (let q = 0; q < len; q++) { x += Math.sin(rad(a)); y -= Math.cos(rad(a)); a += curv; pts.push([x, y, a]); }
+    return pts;
+  }
+
+  const dolphin = (A, b, C) => (u, v) => {
+    if (u < -1 || u > 1) return null;
+    const vv = v - 0.9 * (u * u - 0.3), wm = Math.sqrt(Math.max(0, 1 - u * u)) * 0.55;
+    if (Math.abs(vv) > wm) return null;
+    if (u < -0.7 && Math.abs(vv) < 0.1) return null;
+    if (u > 0.55 && u < 0.7 && vv < -0.05 && vv > -0.2) return C.x;
+    return vv > 0.12 ? C.l : C.b;
   };
 
-  function build(type, stage, wilt) {
-    const sp = SPECIES[type] || SPECIES.cactus, g = new Grid(), P = palette(wilt);
-    if (sp.after) { drawPot(g, sp.pot, sp.deco); sp.draw(g, stage, wilt, P); }
-    else { sp.draw(g, stage, wilt, P); drawPot(g, sp.pot, sp.deco); }
+  const DOL = ['.....B.....', 'B..BBBBB...', 'BBBBBBBEBB.', '.BBLLLLLLBB'];
+  const HRT = ['.BB.BB.', 'BLBBBBB', 'BBBBBBB', '.BBBBB.', '..BBB..', '...B...'];
+  const heartStamp = (g, x, y, ph, C, w) => {
+    const x0 = Math.round(x - 3), y0 = Math.round(y - 3);
+    HRT.forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== '.') g.set(x0 + i, y0 + j, ch === 'L' ? C.l : (i === 3 && j > 1 ? C.s : C.b), 1); }));
+  };
+  const dolStamp = (g, x, y, ph, C, w) => {
+    const flip = ph < 0 ? -1 : 1, x0 = Math.round(x - 5), y0 = Math.round(y - 2);
+    DOL.forEach((row, j) => [...row].forEach((ch, i) => {
+      if (ch === '.') return;
+      const xi = flip > 0 ? i : 10 - i;
+      g.set(x0 + xi, y0 + j, ch === 'L' ? C.l : ch === 'E' ? C.s : C.b, 1);
+    }));
+  };
+
+  const HRT2 = ['BB.BB', 'BXBBB', '.BBB.', '..B..'];
+  const smallHeart = (g, x, y, ph, C, w) => {
+    const x0 = Math.round(x - 2), y0 = Math.round(y - 2);
+    HRT2.forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== '.') g.set(x0 + i, y0 + j, ch === 'X' ? C.x : C.b, 1); }));
+  };
+
+  function spider(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const N = keep([0, 3, 5, 6][st], w), LEN = [0, 9, 14, 18][st], edge = P.m, cen = wl('#eaf6cf', w);
+      for (let i = 0; i < N; i++) {
+        const side = i % 2 ? 1 : -1, a0 = side * (6 + (i >> 1) * 20), L = Math.round(LEN * (1 - 0.15 * w));
+        ribbon(g, walk(24 + side * (i >> 1), BASE - 1, a0, L, side * (2.4 + w * 1.5)), 1.5, 0.5, edge, cen);
+      }
+      const babies = st === 1 ? 0 : st === 2 ? 1 : 2;
+      for (let q = 0; q < babies; q++) {
+        const side = q ? 1 : -1, ex = 24 + side * 15, ey = BASE + 7 + w * 2;
+        line(g, 24 + side * 3, BASE - 3, 24 + side * 9, BASE - 7, P.s); line(g, 24 + side * 9, BASE - 7, ex, ey - 5, P.s);
+        [-50, 0, 50].forEach(k => shape(g, ex + Math.sin(rad(180 + k)) * 2.2, ey - 1 - Math.cos(rad(180 + k)) * 2.2, 3, 0.9, rad(180 + k), leafShapeFn({ shape: 'lance', pat: 'plain' }, 3, 0.9, { b: P.m, s: P.m, l: P.l, x: P.l })));
+      }
+    };
+  }
+
+  function antler(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const fr = wl(mix(P.m, '#cfe3c0', 0.45), w), sh = wl(mix(P.m, '#a89864', 0.45), w), shl = wl(mix(P.l, '#c7d49a', 0.3), w);
+      const rx = [0, 6, 8, 10][st], ry = [0, 3, 4, 5][st];
+      for (let y = BASE - ry; y <= BASE; y++) for (let x = 24 - rx; x <= 24 + rx; x++) {
+        const dx = (x + 0.5 - 24) / rx, dy = (y + 0.5 - (BASE - 1)) / ry;
+        if (dx * dx + dy * dy <= 1 + 0.12 * Math.sin(x * 2.7)) g.set(x, y, dy < -0.3 ? shl : sh, 1);
+      }
+      const roots = [[], [[0, 6, 1]], [[-22, 8, 1], [22, 8, 1]], [[-30, 10, 2], [30, 10, 2], [0, 9, 1]]][st];
+      const branch = (x, y, a, len, depth, side) => {
+        const pts = walk(x, y, a, Math.max(2, Math.round(len * (1 - 0.15 * w))), side * (1.2 + w * 3));
+        ribbon(g, pts, 1.1, 0.7, fr, shl);
+        const e = pts[pts.length - 1];
+        if (depth > 0 && e) [-1, 1].forEach(d => branch(e[0], e[1], e[2] + d * 38, len * 0.7, depth - 1, d));
+        else if (e) ribbon(g, walk(e[0], e[1], e[2], 2, 0), 0.6, 0.3, fr, null);
+      };
+      roots.forEach(r => branch(24, BASE - 3, r[0], r[1], r[2], r[0] < 0 ? -1 : r[0] > 0 ? 1 : 0));
+    };
+  }
+
+  function stones(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const base = wl('#b9ab8e', w), lt = wl('#d3c7ab', w), dk = wl('#8f8165', w), sp = wl('#6f6a52', w), cr = wl('#4f4733', w);
+      const S = [[], [[24, 30, 5, 4]], [[20, 30, 5, 4], [29, 30.5, 4.4, 3.6]], [[19, 30, 5, 4.2], [28, 29, 5.6, 4.8], [24, 32, 3.4, 2.6]]][st];
+      S.forEach(([cx, cy, rx, ry], n) => {
+        ry *= (1 - 0.25 * w);
+        for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y++) for (let x = Math.floor(cx - rx); x <= Math.ceil(cx + rx); x++) {
+          const dx = (x + 0.5 - cx) / rx, dy = (y + 0.5 - cy) / ry; if (dx * dx + dy * dy > 1) continue;
+          let c = dy < -0.35 ? lt : dy > 0.45 ? dk : base;
+          if (hash2(x + n * 7, y) > 0.82 && dy < 0.6) c = sp;
+          if (Math.abs(dx) < 0.13 && dy > -0.4) c = cr;
+          g.set(x, y, c, 1);
+        }
+      });
+      if (st === 3) {
+        const fx = 28, fy = 22, pet = wl('#fbf7e6', w), ctr = wl('#f2cd4d', w);
+        for (let a = 0; a < 8; a++) { const an = a * Math.PI / 4; g.set(fx + Math.cos(an) * 2.2, fy + Math.sin(an) * 2.2, pet, 2); g.set(fx + Math.cos(an) * 1.2, fy + Math.sin(an) * 1.2, pet, 2); }
+        g.set(fx, fy, ctr, 2);
+      }
+    };
+  }
+
+  function venus(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const N = keep([0, 2, 3, 4][st], w), A = [0, 4, 4.8, 5.4][st], DD = [0, 6, 8, 9][st], spread = [0, 55, 60, 68][st];
+      const red = wl('#d24a54', w), dred = wl('#92303c', w), gr = wl(mix(P.m, P.l, 0.2), w), gd = wl(P.d, w);
+      for (let i = 0; i < N; i++) {
+        const t = N === 1 ? 0 : i / (N - 1) * 2 - 1, th = t * spread + (rnd(i, 31) - 0.5) * 8 + (t < 0 ? -1 : 1) * w * 30;
+        const d = DD * (0.8 + 0.2 * (1 - Math.abs(t))) * (1 - 0.2 * w), sx = 24 + Math.sin(rad(th)) * d, sy = BASE - Math.cos(rad(th)) * d;
+        ribbon(g, walk(24, BASE, th, Math.round(d), 0), 0.8, 0.8, gr, null);
+        const ph = th * 1.0, cx = sx + Math.sin(rad(ph)) * A * 0.9, cy = sy - Math.cos(rad(ph)) * A * 0.9, b = A * 0.62;
+        shape(g, cx, cy, A, b, rad(ph), (u, v) => {
+          if (u < -1 || u > 1) return null; const wm = Math.sqrt(Math.max(0, 1 - u * u)), av = Math.abs(v); if (av > wm) return null;
+          if (av > wm * 0.72) return frac(u * 3.5) < 0.5 ? gd : gr;
+          return av < 0.08 ? dred : red;
+        });
+      }
+    };
+  }
+
+
+  /* ---------- Etappe 3b: Orchidee und Kakteen ---------- */
+  const FLW = ['.P.P.', 'PPPPP', '.PXP.', 'PPPPP', '.P.P.'];
+  const maskStamp = (g, mask, x, y, map, k) => {
+    const x0 = Math.round(x - (mask[0].length - 1) / 2), y0 = Math.round(y - (mask.length - 1) / 2);
+    mask.forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== '.' && map[ch]) g.set(x0 + i, y0 + j, map[ch], k || 2); }));
+  };
+
+  function orchidFlowers(g, st, w, P) {
+    if (st < 2) return;
+    const L = Math.round((st === 2 ? 13 : 21) * (1 - 0.1 * w)), pts = walk(24, BASE - 3, 2, L, (st === 2 ? 3.2 : 3.6) + w * 2);
+    pts.forEach(p => g.set(p[0], p[1], wl('#5e9a4a', w), 3));
+    const map = { P: wl('#f7dce9', w), X: wl('#c8447f', w) };
+    pick(st === 2 ? [0.55, 1] : [0.3, 0.55, 0.78, 1], w).forEach(f => { const p = pts[Math.min(pts.length - 1, Math.round(f * (pts.length - 1)))]; maskStamp(g, FLW, p[0], p[1], map, 3); });
+    if (st === 3) { const e = pts[pts.length - 1], n = walk(e[0], e[1], e[2], 5, 4.4 + w * 2); n.forEach((p, i) => { if (i > 1) g.set(p[0], p[1], wl('#e0679f', w), 3); }); }
+  }
+
+  const GOLD = '#f0cf5a';
+  function barrel(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const rx = [0, 4.6, 6.6, 8.6][st], ry0 = rx * 0.95, ry = ry0 * (1 - 0.12 * w), cx = 24, cy = BASE - ry + 1.5;
+      for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y++) for (let x = Math.floor(cx - rx); x <= Math.ceil(cx + rx); x++) {
+        const dx = (x + 0.5 - cx) / rx, dy = (y + 0.5 - cy) / ry; if (dx * dx + dy * dy > 1) continue;
+        const a = dx / Math.max(0.25, Math.sqrt(1 - dy * dy));
+        let c = dx < -0.4 ? P.d : dx > 0.35 ? P.l : P.m;
+        if (Math.abs(a * 3 - Math.round(a * 3)) < 0.17 && rx > 5) { c = P.d; if (y % 3 === 0) c = wl(GOLD, w); }
+        else if (rx <= 5 && Math.abs(dx) < 0.12) c = P.d;
+        g.set(x, y, c, 1);
+      }
+      const top = Math.round(cy - ry);
+      for (let i = -2; i <= 2; i++) g.set(cx + i, top, wl(GOLD, w), 2);
+      if (st === 3) maskStamp(g, ['.Y.', 'YOY', '.Y.'], cx, top - 1, { Y: wl('#f6d44a', w), O: wl('#e98a34', w) }, 3);
+    };
+  }
+
+  function opuntia(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const body = mix(P.m, '#6fb59a', 0.4), edge = P.d, hi = mix(P.l, '#9fd6c0', 0.4), dot = wl('#f1e9b8', w);
+      const PADS = [[], [[-1, 0, 5.5, 4.4, 0]], [[-1, 0, 5.6, 5, 0], [0, -42, 4.8, 4.2, -1.5]],
+        [[-1, 0, 5.6, 5, 0], [0, -44, 4.8, 4.2, -2], [0, 44, 4.8, 4.2, 2], [1, -8, 4.2, 3.6, 0]]][st];
+      const C = [];
+      PADS.forEach(([par, th, A, B, ox]) => {
+        let ax = 24 + ox, ay = BASE + 1;
+        if (par >= 0) { const q = C[par]; ax = q.cx + ox * 0 + Math.sin(rad(q.th)) * q.A * 0.8; ay = q.cy - Math.cos(rad(q.th)) * q.A * 0.8; if (ox) ax += ox * 0.6; }
+        const thr = th + (th < 0 ? -1 : th > 0 ? 1 : 0) * w * 25;
+        const cx = ax + Math.sin(rad(thr)) * A * 0.85, cy = ay - Math.cos(rad(thr)) * A * 0.85 + w * 1.5;
+        C.push({ cx, cy, th: thr, A, B });
+        shape(g, cx, cy, A, B, rad(thr), (u, v) => {
+          const e = Math.sqrt(Math.max(0, 1 - u * u)), av = Math.abs(v); if (av > e) return null; if (av > e * 0.82) return edge;
+          const px = Math.round(u * A), py = Math.round(v * B);
+          if ((px + (py & 1) * 2) % 4 === 0 && (py & 1) === 0) return dot;
+          return v < -0.35 ? hi : body;
+        });
+      });
+      if (st === 3 && w < 0.6) C.slice(1).forEach(q => { const fx = Math.round(q.cx + Math.sin(rad(q.th)) * q.A * 0.95), fy = Math.round(q.cy - Math.cos(rad(q.th)) * q.A * 0.95); rect(g, fx - 1, fy - 1, 2, 2, '#d84a62', 2); });
+    };
+  }
+
+  function xmasCactus(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const N = [0, 2, 3, 4][st], LEN = [0, 10, 15, 19][st], Cc = { b: P.m, s: P.d, l: P.l, x: P.l };
+      const map = { P: wl('#e8438c', w), X: wl('#f8d34a', w) };
+      for (let i = 0; i < N; i++) {
+        const side = i % 2 ? 1 : -1, a0 = side * (14 + (i >> 1) * 20), pts = walk(24, BASE - 1, a0, LEN, side * (6.5 + w * 3));
+        pts.forEach((p, q) => {
+          if (q % 2) return; const r = 2.4 - 0.3 * q / LEN;
+          shape(g, p[0], p[1], r, r * 0.62, rad(p[2] + 90), leafShapeFn({ shape: 'oval', pat: 'plain' }, r, r * 0.62, Cc));
+        });
+        const e = pts[pts.length - 1];
+        if (st === 3 || (st === 2 && i < 2)) maskStamp(g, FLW, e[0], e[1] + 1, map, 3);
+      }
+    };
+  }
+
+  function mammillaria(cfg) {
+    return (g, st, w, P) => {
+      if (st === 0) return sprout(g, w, P);
+      const R = [0, 3.8, 5.2, 6.4][st], cx = 24, cy = BASE - R * 0.95 + 1.5, ry = R * 0.95 * (1 - 0.1 * w);
+      for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y++) for (let x = Math.floor(cx - R); x <= Math.ceil(cx + R); x++) {
+        const dx = (x + 0.5 - cx) / R, dy = (y + 0.5 - cy) / ry; if (dx * dx + dy * dy > 1) continue;
+        let c = dx < -0.4 ? P.d : dx > 0.35 ? P.l : P.m;
+        if ((x + (y % 4 < 2 ? 0 : 1)) % 3 === 0 && y % 2 === 0) c = wl('#f3efd8', w);
+        g.set(x, y, c, 1);
+      }
+      const top = cy - ry, map = { P: wl('#ee6f9a', w), Y: wl('#f7d85a', w) }, F = ['.P.', 'PYP', '.P.'];
+      const spots = st === 2 ? [[-1.5, 1], [2, 0.5]] : st === 3 ? [[-4, 2], [-1.5, 0], [1.5, -0.5], [4, 2], [0, 2.5]] : [];
+      spots.forEach(([ox, oy]) => maskStamp(g, F, cx + ox, top + oy, map, 3));
+    };
+  }
+
+  const VEIN = '#cfe9b8';
+  const SPECIES = {
+    monstera: { label: 'Monstera Adansonii', group: 'Monstera & Philodendron', pot: 'cream', deco: 'dots', draw: monstera },
+    snake: { label: 'Bogenhanf', group: 'Blattpflanzen', pot: 'terra', deco: '', draw: snake },
+    pilea: { label: 'Pilea Peperomioides', group: 'Blattpflanzen', pot: 'mustard', deco: '', draw: pilea },
+    calathea: { label: 'Calathea Orbifolia', group: 'Blattpflanzen', pot: 'cream', deco: '', draw: calathea },
+    pearls: { label: 'Erbsenpflanze', group: 'Hängend', pot: 'cream', deco: 'stripe', after: true, draw: pearls },
+    cactus: { label: 'Säulenkaktus', group: 'Kakteen', pot: 'terra', deco: 'band', draw: cactus },
+
+    monstera_deliciosa: { label: 'Monstera Deliciosa', group: 'Monstera & Philodendron', pot: 'terra', deco: 'band',
+      draw: leafy({ shape: 'heart', notch: 0.7, slits: { us: [-0.55, -0.15, 0.25], d: 0.1, w: 0.12, lean: 1.0 }, aspect: 0.95, N: [0, 2, 3, 3], A: [0, 6.5, 9, 11.5], DD: [0, 9, 12, 14], spread: 78, turn: 0.85, seed: 11 }) },
+    monstera_thai: { label: 'Monstera Thai Constellation', group: 'Monstera & Philodendron', rare: true, pot: 'cream', deco: '',
+      draw: leafy({ shape: 'heart', notch: 0.74, holes: true, slits: { us: [-0.3, 0.15], d: 0.35, w: 0.09, lean: 0.6 }, aspect: 0.88, pat: 'speckle', N: [0, 2, 3, 3], A: [0, 6.5, 9, 11], DD: [0, 8, 11, 13], spread: 78, turn: 0.85, seed: 12, col: (P, w) => ({ b: P.m, s: P.d, l: P.l, x: wl('#f6f0cc', w) }) }) },
+    monstera_mini: { label: 'Mini-Monstera', group: 'Monstera & Philodendron', pot: 'sand', deco: 'dots',
+      draw: leafy({ shape: 'oval', slits: { us: [-0.5, -0.05, 0.4], d: 0.1, w: 0.14, lean: 0.4 }, slitMin: 4, aspect: 0.62, N: [0, 3, 4, 5], A: [0, 4.6, 6.4, 8], DD: [0, 8, 12, 15], spread: 72, turn: 0.9, seed: 13, col: (P, w) => ({ b: mix(P.m, P.l, 0.3), s: P.m, l: P.l, x: P.l }) }) },
+    philodendron_birkin: { label: 'Philodendron Birkin', group: 'Monstera & Philodendron', pot: 'charcoal', deco: '',
+      draw: leafy({ shape: 'lance', aspect: 0.27, pat: 'pin', N: [0, 3, 4, 5], A: [0, 5.5, 8, 10.5], DD: [0, 6, 8, 9], spread: 52, turn: 1.0, seed: 14, col: (P, w) => ({ b: mix(P.m, P.d, 0.3), s: P.d, l: P.l, x: wl('#f1eed2', w) }) }) },
+    philodendron_pink: { label: 'Philodendron Pink Princess', group: 'Monstera & Philodendron', rare: true, pot: 'sage', deco: '',
+      draw: leafy({ shape: 'pointheart', notch: 0.7, aspect: 0.8, pat: 'blotch', N: [0, 2, 3, 3], A: [0, 6, 8.5, 10.5], DD: [0, 7, 10, 12], spread: 72, turn: 0.85, seed: 15, col: (P, w) => ({ b: mix(P.d, '#2a1d2b', 0.55 * (1 - w)), s: mix(P.d, '#1d1520', 0.6 * (1 - w)), l: wl('#e58bb0', w), x: wl('#ee78a8', w) }) }) },
+    philodendron_gloriosum: { label: 'Philodendron Gloriosum', group: 'Monstera & Philodendron', rare: true, pot: 'mustard', deco: '',
+      draw: leafy({ shape: 'triheart', notch: 0.6, aspect: 1.0, pat: 'veins', N: [0, 2, 3, 3], A: [0, 6, 8.5, 10.5], DD: [0, 5, 6, 7], spread: 88, turn: 0.95, seed: 16, col: (P, w) => ({ b: P.d, s: mix(P.d, P.o, 0.5), l: wl(VEIN, w), x: wl(VEIN, w) }) }) },
+    alocasia_polly: { label: 'Alocasia Polly', group: 'Blattpflanzen', rare: true, pot: 'blush', deco: '',
+      draw: leafy({ shape: 'arrow', notch: 0.62, wave: 0.07, aspect: 0.55, pat: 'veins', N: [0, 2, 3, 4], A: [0, 6, 8.5, 10], DD: [0, 10, 15, 19], spread: 44, turn: 1.45, seed: 17, col: (P, w) => ({ b: mix(P.d, P.o, 0.15), s: mix(P.d, P.o, 0.5), l: wl(VEIN, w), x: wl(VEIN, w) }) }) },
+    anthurium_clarinervium: { label: 'Anthurium Clarinervium', group: 'Blattpflanzen', rare: true, pot: 'cream', deco: 'band',
+      draw: leafy({ shape: 'shield', notch: 0.55, aspect: 0.9, pat: 'veins', N: [0, 2, 3, 4], A: [0, 5.5, 7.5, 9], DD: [0, 10, 14, 17], spread: 58, turn: 0.8, seed: 18, col: (P, w) => ({ b: mix(P.d, P.m, 0.3), s: P.d, l: wl(VEIN, w), x: wl(VEIN, w) }) }) },
+    geigenfeige: { label: 'Geigenfeige', group: 'Feigen & Bäume', pot: 'charcoal', deco: 'band',
+      draw: stemmed({ shape: 'violin', aspect: 0.6, pat: 'veins', N: [0, 3, 4, 4], A: [0, 4.8, 6.4, 7.6], TH: [0, 7, 12, 16], out: 48,
+        col: (P, w) => ({ b: mix(P.m, P.d, 0.25), s: P.d, l: wl('#a8d98a', w), x: wl('#a8d98a', w) }) }) },
+    gummibaum: { label: 'Gummibaum', group: 'Feigen & Bäume', pot: 'terra', deco: '',
+      draw: stemmed({ shape: 'pointoval', aspect: 0.48, pat: 'plain', N: [0, 3, 4, 4], A: [0, 5.2, 7, 8.2], TH: [0, 7, 12, 16], out: 55,
+        col: (P, w) => ({ b: mix(P.d, '#3c2a30', 0.35 * (1 - w)), s: mix(P.d, P.o, 0.5), l: wl('#8fc07a', w), x: P.l }) }) },
+    ficus_audrey: { label: 'Ficus Audrey', group: 'Feigen & Bäume', rare: true, pot: 'cream', deco: 'dots',
+      draw: stemmed({ shape: 'oval', aspect: 0.7, pat: 'veins', N: [0, 3, 4, 4], A: [0, 4.8, 6.4, 7.6], TH: [0, 7, 12, 16], out: 50,
+        col: (P, w) => ({ b: mix(P.m, '#b4cf9c', 0.45), s: mix(P.m, P.d, 0.5), l: wl('#e6f2d2', w), x: wl('#e6f2d2', w) }) }) },
+    baumstrelitzie: { label: 'Baumstrelitzie', group: 'Feigen & Bäume', pot: 'mustard', deco: 'band',
+      draw: leafy({ shape: 'paddle', aspect: 0.4, slits: { us: [-0.3, 0.2], d: 0.55, w: 0.05, lean: 0.3 }, slitMin: 9, pat: 'plain', N: [0, 2, 3, 4], A: [0, 7, 9.5, 11], DD: [0, 9, 11, 13], spread: 42, turn: 1.0, seed: 21 }) },
+    zimmerbambus: { label: 'Zimmerbambus', group: 'Feigen & Bäume', pot: 'sage', deco: '',
+      draw: canes({}) },
+    zz: { label: 'Glücksfeder', group: 'Blattpflanzen', pot: 'charcoal', deco: '',
+      draw: pinnate({ curv: 0.7, col: (P, w) => ({ b: mix(P.m, P.d, 0.25), s: P.d, l: P.l, x: P.l }) }) },
+    friedenslilie: { label: 'Friedenslilie', group: 'Blattpflanzen', pot: 'cream', deco: 'band',
+      draw: leafy({ shape: 'lance', aspect: 0.42, pat: 'plain', N: [0, 3, 4, 6], A: [0, 5.5, 8, 9.5], DD: [0, 5, 7, 8], spread: 55, turn: 0.95, seed: 22, after: lilyFlowers,
+        col: (P, w) => ({ b: mix(P.d, P.m, 0.45), s: P.d, l: P.m, x: P.l }) }) },
+    gebetspflanze: { label: 'Gebetspflanze', group: 'Blattpflanzen', pot: 'terra', deco: 'dots',
+      draw: leafy({ shape: 'oval', aspect: 0.68, pat: 'maranta', N: [0, 3, 4, 4], A: [0, 5.2, 7, 8.2], DD: [0, 4, 5, 6], spread: 100, turn: 1.4, seed: 23,
+        col: (P, w) => ({ b: mix(P.m, P.l, 0.5), s: mix(P.d, '#2e5a34', 0.4), l: wl('#f0f4c0', w), x: wl('#cf6872', w) }) }) },
+    peperomie: { label: 'Wassermelonen-Peperomie', group: 'Blattpflanzen', pot: 'blush', deco: '',
+      draw: leafy({ shape: 'round', notch: 0.88, aspect: 0.9, pat: 'melon', jit: 0.4, N: [0, 3, 4, 5], A: [0, 4.4, 5.2, 5.8], DD: [0, 7, 10, 12], spread: 78, turn: 0.9, seed: 24,
+        stem: (P, w) => wl('#c86a6a', w), col: (P, w) => ({ b: mix(P.d, P.m, 0.3), s: P.d, l: P.l, x: wl('#c4e4d4', w) }) }) },
+    syngonium: { label: 'Pfeilblatt', group: 'Blattpflanzen', pot: 'sage', deco: 'stripe',
+      draw: leafy({ shape: 'arrow', notch: 0.6, aspect: 0.7, pat: 'center', N: [0, 3, 4, 4], A: [0, 5.5, 7.5, 9.5], DD: [0, 8, 12, 14], spread: 55, turn: 1.1, seed: 25,
+        col: (P, w) => ({ b: P.m, s: P.d, l: wl('#f6d3de', w), x: wl('#f0a8c0', w) }) }) },
+    herz_hoya: { label: 'Herz-Hoya', group: 'Hängend', rare: true, pot: 'terra', deco: 'band', after: true, lift: 9,
+      draw: vines({ stamp: heartStamp, nm: 2, ns: 3, step: 9, lenm: 1.5, mph: 150, col: (P, w) => ({ b: mix(P.m, P.d, 0.15), s: P.d, l: P.l, x: P.l }) }) },
+    string_hearts: { label: 'String of Hearts', group: 'Hängend', rare: true, pot: 'cream', deco: 'stripe', after: true, lift: 9,
+      draw: vines({ stamp: smallHeart, nm: 2, ns: 3, step: 5, lenm: 1.6, wire: (P, w) => wl('#a5708a', w), col: (P, w) => ({ b: wl('#5f9a78', w), s: P.d, l: P.l, x: wl('#d9ecd6', w) }) }) },
+    tradescantia: { label: 'Dreimasterblume', group: 'Hängend', pot: 'sand', deco: 'dots', after: true, lift: 9,
+      draw: vines({ shape: 'pointoval', notch: 0, pat: 'trad', asp: 0.5, ma: 1.5, la: 1.45, nm: 2, ns: 3, step: 6, lenm: 1.5, wire: (P, w) => wl('#7a4f8f', w), col: (P, w) => ({ b: wl('#7b4f94', w), s: wl('#4f3366', w), l: wl('#9a72b3', w), x: wl('#cfd8d2', w) }) }) },
+    gruenlilie: { label: 'Grünlilie', group: 'Hängend', pot: 'blush', deco: 'stripe', after: true, draw: spider({}) },
+    schwertfarn: { label: 'Schwertfarn', group: 'Blattpflanzen', pot: 'terra', deco: 'band',
+      draw: pinnate({ Ns: [0, 3, 5, 6], LENs: [0, 10, 15, 19], curv: 2.2, a0: 8, a1: 20, start: 3, step: 2, r0: 2.6, r1: 1.0, asp: 0.32, ang: 62, shp: 'lance', tipA: 2.2, tipR: 0.3,
+        stemCol: (P, w) => wl('#3f8a3c', w), col: (P, w) => ({ b: wl('#6cbf55', w), s: wl('#4d9b44', w), l: wl('#9bdb7a', w), x: wl('#9bdb7a', w) }) }) },
+    orchidee: { label: 'Orchidee', group: 'Blattpflanzen', pot: 'cream', deco: 'band',
+      draw: leafy({ shape: 'oval', aspect: 0.5, pat: 'plain', N: [0, 2, 2, 2], A: [0, 5.5, 8, 9], DD: [0, 3, 4, 4], spread: 90, turn: 1.1, seed: 41, after: orchidFlowers,
+        col: (P, w) => ({ b: mix(P.m, P.l, 0.1), s: P.d, l: P.l, x: P.l }) }) },
+    schwiegermutter: { label: 'Schwiegermuttersitz', group: 'Kakteen', pot: 'cream', deco: 'dots', draw: barrel({}) },
+    opuntie: { label: 'Opuntie', group: 'Kakteen', pot: 'sand', deco: 'band', draw: opuntia({}) },
+    weihnachtskaktus: { label: 'Weihnachtskaktus', group: 'Kakteen', pot: 'blush', deco: 'stripe', after: true, lift: 5, draw: xmasCactus({}) },
+    mammillaria: { label: 'Mammillaria', group: 'Kakteen', pot: 'terra', deco: 'dots', draw: mammillaria({}) },
+    aloe: { label: 'Aloe vera', group: 'Sukkulenten & Besondere', pot: 'terra', deco: 'band',
+      draw: leafy({ shape: 'blade', wave: 0.1, aspect: 0.32, pat: 'speckle', N: [0, 3, 5, 7], A: [0, 6, 8.5, 10.5], DD: [0, 4, 5, 6], spread: 50, turn: 1.0, seed: 32,
+        col: (P, w) => ({ b: wl('#6fb59a', w), s: wl('#4f9480', w), l: wl('#a5d8c0', w), x: wl('#d8efe4', w) }) }) },
+    lithops: { label: 'Lithops', group: 'Sukkulenten & Besondere', rare: true, pot: 'sand', deco: 'band', draw: stones({}) },
+    venus: { label: 'Venusfliegenfalle', group: 'Sukkulenten & Besondere', rare: true, pot: 'sage', deco: '', draw: venus({}) },
+    philodendron_herz: { label: 'Herzblatt-Philodendron', group: 'Hängend', pot: 'sage', deco: 'stripe', after: true,
+      draw: vines({ shape: 'pointheart', pat: 'plain', col: (P, w) => ({ b: mix(P.m, P.d, 0.2), s: P.d, l: P.l, x: P.l }) }) },
+    efeutute: { label: 'Efeutute', group: 'Hängend', pot: 'sand', deco: 'dots', after: true,
+      draw: vines({ shape: 'heart', pat: 'marble', col: (P, w) => ({ b: P.m, s: P.d, l: P.l, x: wl('#efe08a', w) }) }) }
+  };
+  const GROUPS = ['Monstera & Philodendron', 'Feigen & Bäume', 'Blattpflanzen', 'Hängend', 'Kakteen', 'Sukkulenten & Besondere'];
+
+  /* Vertrocknete Pflanze: bei allen Arten gleich, nur ein kleines Aestchen. */
+  function twig(g) {
+    const wd = '#7d5d38', dk = '#4e3a22', lf = '#8a6a3a';
+    line(g, 24, BASE, 24, BASE - 4, wd); line(g, 24, BASE - 4, 25, BASE - 7, wd);
+    line(g, 24, BASE - 3, 21, BASE - 6, wd); line(g, 24, BASE - 2, 27, BASE - 4, wd);
+    g.set(25, BASE - 8, dk); g.set(21, BASE - 7, lf); g.set(20, BASE - 6, lf); g.set(28, BASE - 5, lf);
+  }
+
+  function build(type, stage, wilt, skin) {
+    stage = Math.max(1, stage);
+    const base = SPECIES[type] || SPECIES.cactus, sk = SKIN_STYLE[skin], sp = sk ? Object.assign({}, base, sk) : base, g = new Grid(), P = palette(wilt);
+    g.dy = sp.lift || 0;
+    if (wilt >= 0.999) { twig(g); drawPot(g, sp.pot, sp.deco, sp.shape); }
+    else if (sp.after) { drawPot(g, sp.pot, sp.deco, sp.shape); sp.draw(g, stage, wilt, P); }
+    else { sp.draw(g, stage, wilt, P); drawPot(g, sp.pot, sp.deco, sp.shape); }
+    g.dy = 0;
     outline(g, P);
     return g;
   }
@@ -551,19 +1125,129 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
   }
 
   const cache = {};
-  function spriteURL(type, stage, wilt) {
-    const wq = Math.round(clamp(wilt || 0, 0, 1) * 4) / 4, key = type + '|' + stage + '|' + wq;
+  function spriteURL(type, stage, wilt, skin) {
+    const wq = (wilt || 0) >= 0.999 ? 1 : Math.min(0.75, Math.round(clamp(wilt || 0, 0, 1) * 4) / 4), key = type + '|' + stage + '|' + wq + '|' + (skin || '');
     if (!cache[key]) {
       const c = document.createElement('canvas'); c.width = W; c.height = H;
       const ctx = c.getContext('2d'), img = ctx.createImageData(W, H);
-      img.data.set(toRGBA(build(type, stage, wq)));
+      img.data.set(toRGBA(build(type, stage, wq, skin)));
       ctx.putImageData(img, 0, 0);
       cache[key] = c.toDataURL('image/png');
     }
     return cache[key];
   }
 
-  root.Sprites = { W, H, SPECIES, build, toRGBA, spriteURL };
+
+  /* ---------- Abzeichen-Symbole (32x32: farbige Kachel mit 20x20-Motiv) ---------- */
+  const BADGE_OUT = '#3b2a22';
+  const TILE = {
+    tropfen: ['#d3eafa', '#5ea8d8'], beet: ['#ecdac3', '#a8733c'], serie5: ['#fff1bd', '#f2b630'], daumen: ['#d9f0cb', '#5fbf5a'],
+    oase: ['#cdeef5', '#4aa8c8'], treffen: ['#f5ddc2', '#c48a4a'], rettung: ['#e6f3cb', '#7cc243'], baum: ['#d5ecc4', '#4fa845']
+  };
+  const BADGES_ART = {
+    tropfen(d) { // Giesskanne
+      const B = '#4f9fd6', Lt = '#8cc8ee', Dk = '#376fa3';
+      d.R(7, 9, 9, 9, B); d.R(7, 9, 9, 1, Lt); d.R(8, 10, 2, 7, Lt); d.R(7, 16, 9, 2, Dk); d.R(14, 10, 2, 6, Dk);
+      d.R(6, 8, 6, 1, Dk); d.R(9, 4, 2, 4, Dk); d.R(14, 4, 2, 1, Dk); d.R(15, 5, 1, 4, Dk); d.R(10, 3, 5, 1, Dk);
+      d.R(16, 11, 3, 2, Dk); d.R(18, 13, 1, 3, Dk); d.R(16, 16, 3, 1, Dk); d.R(15, 11, 1, 5, Dk);
+      d.R(5, 14, 2, 2, B); d.R(3, 12, 2, 2, B); d.R(4, 14, 1, 1, Dk);
+      d.R(1, 9, 4, 3, Lt); d.R(1, 9, 4, 1, '#c9e6f8'); d.P(2, 10, Dk); d.P(3, 10, Dk);
+    },
+    beet(d) { // Schaufel
+      const W = '#b98348', Wd = '#8a5a2b', M = '#c6d0d8', Md = '#9aa7b2';
+      d.R(5, 0, 10, 2, Wd); d.R(6, 0, 8, 1, W); d.R(9, 2, 2, 9, W); d.R(9, 2, 1, 9, '#d9a866'); d.R(10, 2, 1, 9, Wd);
+      d.R(7, 10, 6, 2, Md); d.R(4, 12, 12, 5, M); d.R(5, 17, 10, 2, M); d.R(7, 19, 6, 1, M);
+      d.R(4, 12, 3, 6, '#eef3f7'); d.R(13, 12, 3, 5, Md); d.R(12, 17, 2, 1, Md);
+    },
+    serie5(d) { // Sonne
+      d.C(10, 10, 5.4, '#f7c948'); d.C(11.5, 11.5, 3.6, '#f0b232'); d.C(10, 10, 4.6, '#f7c948'); d.R(7, 6, 3, 2, '#fdf0a8'); d.P(7, 8, '#fdf0a8');
+      [[9, 0, 2, 3], [9, 17, 2, 3], [0, 9, 3, 2], [17, 9, 3, 2]].forEach(r => d.R(r[0], r[1], r[2], r[3], '#f29b30'));
+      [[3, 3], [15, 3], [3, 15], [15, 15]].forEach(r => d.R(r[0], r[1], 2, 2, '#f29b30'));
+      d.P(8, 9, '#7a4a22'); d.P(8, 10, '#7a4a22'); d.P(12, 9, '#7a4a22'); d.P(12, 10, '#7a4a22');
+      d.P(8, 12, '#7a4a22'); d.R(9, 13, 2, 1, '#7a4a22'); d.P(12, 12, '#7a4a22'); d.P(7, 11, '#ef8f6a'); d.P(13, 11, '#ef8f6a');
+    },
+    daumen(d) { // Gartenhandschuh
+      const G = '#5fbf5a', Lg = '#9be07a', Dg = '#3b8c3c';
+      d.R(5, 10, 11, 7, G); d.R(5, 4, 2, 7, G); d.R(8, 2, 2, 9, G); d.R(11, 3, 2, 8, G); d.R(14, 5, 2, 6, G);
+      d.R(2, 10, 3, 3, G); d.R(1, 8, 3, 3, G); d.R(5, 17, 11, 3, Dg); d.R(5, 17, 11, 1, '#4aa354');
+      [[5, 4], [8, 2], [11, 3], [14, 5]].forEach(q => d.R(q[0], q[1], 2, 1, Lg));
+      d.R(6, 11, 8, 1, Lg); d.R(15, 11, 1, 6, '#4aa354'); d.R(6, 13, 3, 1, Dg);
+      [[7, 14], [8, 14]].forEach(q => d.P(q[0], q[1], '#8fd873')); d.P(12, 14, '#8fd873'); d.P(11, 15, '#8fd873'); d.P(10, 13, '#7a5230'); d.P(13, 16, '#7a5230');
+    },
+    oase(d) { // Palme auf Insel
+      const G = '#4fa845', Gd = '#3a8a36', Gl = '#7bd06a';
+      d.R(0, 18, 20, 2, '#6bbfee'); d.R(2, 18, 16, 1, '#9bd8f5'); d.R(3, 16, 14, 2, '#ecd593'); d.R(5, 15, 10, 1, '#ecd593'); d.R(3, 17, 14, 1, '#d4b872');
+      d.R(10, 12, 2, 4, '#a8733c'); d.R(10, 9, 2, 3, '#8a5a2b'); d.R(11, 6, 2, 3, '#a8733c'); d.R(10, 12, 2, 1, '#8a5a2b'); d.R(11, 8, 2, 1, '#8a5a2b');
+      d.L(12, 5, 5, 2, G); d.L(12, 6, 5, 3, G); d.L(12, 5, 19, 3, G); d.L(12, 6, 19, 4, G); d.L(12, 5, 2, 8, Gd); d.L(12, 6, 3, 9, Gd);
+      d.L(12, 5, 18, 8, Gd); d.L(12, 6, 17, 9, Gd); d.L(12, 5, 12, 0, Gl); d.L(12, 5, 8, 1, Gl); d.L(12, 5, 16, 1, Gl);
+      d.R(10, 7, 2, 2, '#7a4a22'); d.P(13, 7, '#7a4a22');
+    },
+    treffen(d) { // Gartenbank
+      const L = '#e0a465', Lh = '#f1be83', D = '#8a5a2b', M = '#c48a4a';
+      d.R(2, 2, 16, 2, L); d.R(2, 2, 16, 1, Lh); d.R(2, 5, 16, 2, L); d.R(2, 5, 16, 1, Lh); d.R(2, 8, 16, 2, L); d.R(2, 8, 16, 1, Lh);
+      d.R(1, 1, 2, 13, D); d.R(17, 1, 2, 13, D); d.R(1, 1, 2, 1, M); d.R(17, 1, 2, 1, M);
+      d.R(0, 12, 20, 3, M); d.R(0, 12, 20, 1, Lh); d.R(0, 14, 20, 1, D);
+      d.R(2, 15, 3, 5, D); d.R(15, 15, 3, 5, D);
+    },
+    rettung(d) { // Duengerflasche mit Plus
+      d.R(7, 0, 6, 3, '#3b8c3c'); d.R(7, 0, 6, 1, '#59b05a'); d.R(8, 3, 4, 2, '#d6e0e4'); d.R(6, 5, 8, 1, '#7cc243');
+      d.R(4, 6, 12, 13, '#7cc243'); d.R(5, 7, 2, 11, '#b7e27a'); d.R(14, 6, 2, 13, '#5a9e2f'); d.R(4, 18, 12, 1, '#4f8a29');
+      d.R(6, 9, 8, 8, '#fffbe8'); d.R(6, 9, 8, 1, '#efe5bd'); d.R(9, 10, 2, 6, '#d94b4b'); d.R(8, 12, 4, 2, '#d94b4b');
+    },
+    baum(d) { // Apfelbaum
+      const G = '#4fa845', Gd = '#3a8a36', Gl = '#8fd873';
+      d.C(10, 7, 6, G); d.C(5, 10, 4, G); d.C(15, 10, 4, Gd); d.C(10, 11, 4.5, Gd); d.C(10, 7, 4.8, G);
+      d.R(6, 3, 4, 2, Gl); d.R(4, 7, 2, 2, Gl); d.R(8, 2, 3, 1, Gl);
+      d.R(9, 13, 3, 5, '#8a5a2b'); d.R(9, 13, 1, 5, '#b0733c'); d.R(7, 17, 7, 1, '#8a5a2b'); d.R(2, 18, 16, 2, '#5fbf5a'); d.R(2, 18, 16, 1, '#8fd873');
+      [[6, 8], [14, 11], [9, 10], [12, 5]].forEach(q => { d.R(q[0], q[1], 2, 2, '#e8484f'); d.P(q[0], q[1], '#f58a8e'); });
+    }
+  };
+  function badgeGrid(id) {
+    const N = 32, px = new Array(N * N).fill(null);
+    const [bg, ring] = TILE[id] || TILE.tropfen;
+    const put = (x, y, c) => { if (x >= 0 && y >= 0 && x < N && y < N) px[y * N + x] = c; };
+    const inTile = (x, y, r) => { // Quadrat mit abgeschnittenen Ecken
+      const cx = x < 16 ? 15 - x : x - 16, cy = y < 16 ? 15 - y : y - 16;
+      return cx <= 15 - r && cy <= 15 - r && !(cx + cy > 28 - r * 2);
+    };
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      if (inTile(x, y, 1)) put(x, y, ring);
+      if (inTile(x, y, 3)) put(x, y, bg);
+    }
+    const layer = new Array(N * N).fill(null);
+    const set = (x, y, c) => { x = Math.round(x) + 6; y = Math.round(y) + 6; if (x >= 0 && y >= 0 && x < N && y < N) layer[y * N + x] = c; };
+    const d = {
+      P: (x, y, c) => set(x, y, c),
+      R: (x, y, w, h, c) => { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) set(x + i, y + j, c); },
+      L: (x0, y0, x1, y1, c) => { const n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0), 1); for (let i = 0; i <= n; i++) set(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n, c); },
+      C: (cx, cy, r, c) => { for (let y = Math.floor(cy - r); y <= Math.ceil(cy + r); y++) for (let x = Math.floor(cx - r); x <= Math.ceil(cx + r); x++) if ((x - cx) * (x - cx) + (y - cy) * (y - cy) <= r * r) set(x, y, c); }
+    };
+    (BADGES_ART[id] || BADGES_ART.tropfen)(d);
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      if (layer[y * N + x]) continue;
+      if ([[1, 0], [-1, 0], [0, 1], [0, -1]].some(q => { const nx = x + q[0], ny = y + q[1]; return nx >= 0 && ny >= 0 && nx < N && ny < N && layer[ny * N + nx]; })) put(x, y, '#5a3d2c');
+    }
+    for (let i = 0; i < N * N; i++) if (layer[i]) px[i] = layer[i];
+    // Umriss um die Kachel
+    const out = px.slice();
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      if (px[y * N + x]) continue;
+      if ([[1, 0], [-1, 0], [0, 1], [0, -1]].some(q => { const nx = x + q[0], ny = y + q[1]; return nx >= 0 && ny >= 0 && nx < N && ny < N && px[ny * N + nx]; })) out[y * N + x] = BADGE_OUT;
+    }
+    return out;
+  }
+  const badgeCache = {};
+  function badgeURL(id) {
+    if (!badgeCache[id]) {
+      const N = 32, c = document.createElement('canvas'); c.width = N; c.height = N;
+      const ctx = c.getContext('2d'), img = ctx.createImageData(N, N), g = badgeGrid(id);
+      g.forEach((col, i) => { if (!col) return; const r = hex2rgb(col); img.data.set([r[0], r[1], r[2], 255], i * 4); });
+      ctx.putImageData(img, 0, 0); badgeCache[id] = c.toDataURL('image/png');
+    }
+    return badgeCache[id];
+  }
+
+  root.Sprites = { W, H, SPECIES, GROUPS, SKIN_STYLE, build, toRGBA, spriteURL, badgeURL, badgeGrid, BADGE_IDS: Object.keys(BADGES_ART) };
   if (typeof module !== 'undefined' && module.exports) module.exports = root.Sprites;
 })(typeof window !== 'undefined' ? window : globalThis);
 
@@ -581,9 +1265,19 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     bekannt: { label: 'Bekanntschaft', plural: 'Bekanntschaften', days: 60 }
   };
   const GRADE_ORDER = ['eng', 'normal', 'bekannt'];
+  /* Eigene Kategorienamen (Einstellungen) ersetzen die Standardnamen; leer = Standard. */
+  const gradeName = id => { const n = S && S.settings && S.settings.names && S.settings.names[id]; return (typeof n === 'string' && n.trim()) ? n.trim().slice(0, 28) : GRADES[id].plural; };
+  const setGradeName = (id, v) => { if (!S.settings.names) S.settings.names = {}; const t = String(v || '').trim().slice(0, 28); if (t && t !== GRADES[id].plural) S.settings.names[id] = t; else delete S.settings.names[id]; };
   const TYPES = [{ id: 'nachricht', label: 'Nachricht' }, { id: 'anruf', label: 'Anruf' }, { id: 'treffen', label: 'Treffen' }];
   const TYPE_LABEL = { nachricht: 'Nachricht', anruf: 'Anruf', treffen: 'Treffen' };
-  const PLANTS = ['monstera', 'snake', 'pilea', 'calathea', 'pearls', 'cactus'];
+  const SPR = root.Sprites || (typeof require !== 'undefined' ? require('./sprites.js') : null);
+  const PLANTS = SPR ? Object.keys(SPR.SPECIES) : ['monstera', 'snake', 'pilea', 'calathea', 'pearls', 'cactus'];
+  /* Besondere Toepfe: freigeschaltet, sobald der beste Streak der Pflanze den Wert erreicht. Aussehen siehe sprites.js. */
+  const SKINS = [
+    { id: '', label: 'Standard', need: 0 }, { id: 'mint', label: 'Mint-Zylinder', need: 3 }, { id: 'sky', label: 'Himmelblaue Schale', need: 5 },
+    { id: 'berry', label: 'Beeren-Tasse', need: 8 }, { id: 'violet', label: 'Lila Vase', need: 12 }, { id: 'rainbow', label: 'Regenbogen-Eimer', need: 20 }
+  ];
+  const skinOk = (f, id) => { const k = SKINS.find(x => x.id === id); return !!k && f.best >= k.need; };
   const STATE_LABEL = { bluehend: 'Blühend', gesund: 'Gesund', dringlich: 'Dringlich', verwelkt: 'Verwelkt', gerissen: 'Neu starten' };
   const LEVEL_NAMES = ['Samen', 'Spross', 'Setzling', 'Gärtner:in', 'Beetkönig:in', 'Dschungel'];
 
@@ -621,7 +1315,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
   /* ---------- Regeln ---------- */
   const interval = f => f.custom || GRADES[f.grade].days;
   const grace = f => Math.max(1, Math.round(interval(f) * 0.25));
-  const stageFor = streak => streak >= 8 ? 3 : streak >= 4 ? 2 : streak >= 2 ? 1 : 0;
+  const stageFor = streak => streak >= 8 ? 3 : streak >= 4 ? 2 : 1;
   const jokersLeft = () => Math.max(0, JOKERS - S.jokers.used);
   const active = s => (s || S).friends.filter(f => !f.archived);
 
@@ -636,7 +1330,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     else st = 'bluehend';
     const wilt = st === 'gerissen' ? 1 : st === 'verwelkt' ? 0.75 + 0.25 * Math.min(1, overdue / g) : st === 'dringlich' ? 0.3 : 0;
     const fresh = st === 'gerissen' ? 0 : st === 'verwelkt' ? 0.12 : Math.max(0.1, Math.min(1, 1 - progress));
-    return { st, since, overdue, iv, g, progress, wilt, fresh, stage: st === 'gerissen' ? 0 : stageFor(f.streak), left: iv - since };
+    return { st, since, overdue, iv, g, progress, wilt, fresh, stage: stageFor(f.streak), left: iv - since };
   }
 
   function normalize() {
@@ -652,7 +1346,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     const t = todayTs();
     return {
       id: uid(), name: o.name, grade: o.grade, custom: o.custom || null, plant: o.plant, link: o.link || '',
-      streak: 0, best: 0, lastWatered: t, lastCounted: t, created: Date.now(), note: '',
+      streak: 0, best: 0, pot: '', lastWatered: t, lastCounted: t, created: Date.now(), note: '',
       archived: false, archivedAt: null, broken: false, history: []
     };
   }
@@ -661,7 +1355,8 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
   function water(f, type, dateTs, useJoker) {
     const t = todayTs();
     dateTs = Math.min(startOfDay(dateTs), t);
-    const res = { grew: false, revived: false, reset: false, restarted: false };
+    const res = { grew: false, revived: false, reset: false, restarted: false, unlocked: [] };
+    const bestBefore = f.best;
     f.history.unshift({ ts: dateTs, type });
     f.history.sort((a, b) => b.ts - a.ts);
     if (f.history.length > 60) f.history.length = 60;
@@ -683,6 +1378,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
       f.broken = false;
       f.lastWatered = dateTs;
       f.best = Math.max(f.best, f.streak);
+      res.unlocked = SKINS.filter(k => k.need > bestBefore && k.need <= f.best);
     }
     save();
     return res;
@@ -748,7 +1444,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
       id: String(x.id || uid()).slice(0, 40), name, grade: GRADES[x.grade] ? x.grade : 'normal',
       custom: (+x.custom >= 1 && +x.custom <= 365) ? Math.round(+x.custom) : null,
       plant: PLANTS.includes(x.plant) ? x.plant : 'cactus',
-      streak: Math.max(0, Math.round(num(x.streak))), best: 0, lastWatered: lw,
+      streak: Math.max(0, Math.round(num(x.streak))), best: 0, pot: '', lastWatered: lw,
       lastCounted: Math.min(t, startOfDay(num(x.lastCounted) || lw)), created: num(x.created) || Date.now(),
       note: String(x.note || '').slice(0, 120), link: cleanLink(x.link).ok ? cleanLink(x.link).value : '',
       archived: !!x.archived, archivedAt: x.archivedAt ? num(x.archivedAt) : null, broken: false,
@@ -757,6 +1453,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
       })) : []
     };
     f.best = Math.max(f.streak, Math.round(num(x.best)));
+    f.pot = skinOk(f, x.pot) ? x.pot : '';
     return f;
   }
   function cleanState(o) {
@@ -766,7 +1463,10 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     if (o.jokers && o.jokers.m === s.jokers.m) s.jokers.used = Math.min(JOKERS, num(o.jokers.used));
     if (o.stats) s.stats = { waters: num(o.stats.waters), meets: num(o.stats.meets), revives: num(o.stats.revives) };
     if (o.badges && typeof o.badges === 'object') BADGES.forEach(b => { if (o.badges[b.id]) s.badges[b.id] = +o.badges[b.id] || Date.now(); });
-    if (o.settings) s.settings.weekly = o.settings.weekly !== false;
+    if (o.settings) {
+      s.settings.weekly = o.settings.weekly !== false;
+      if (o.settings.names && typeof o.settings.names === 'object') GRADE_ORDER.forEach(id => { const n = o.settings.names[id]; if (typeof n === 'string' && n.trim()) { if (!s.settings.names) s.settings.names = {}; s.settings.names[id] = n.trim().slice(0, 28); } });
+    }
     s.demo = false;
     return s;
   }
@@ -775,12 +1475,12 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
   function demoState() {
     const s = newState(), t = todayTs();
     const spec = [
-      ['Alex', 'eng', 'monstera', 1, 12, 'Wie war der Umzug?'],
-      ['Maya', 'eng', 'snake', 6, 5, 'Neuer Job, nach dem ersten Monat fragen.'],
+      ['Alex', 'eng', 'monstera_deliciosa', 1, 12, 'Wie war der Umzug?'],
+      ['Maya', 'eng', 'friedenslilie', 6, 5, 'Neuer Job, nach dem ersten Monat fragen.'],
       ['Liam', 'normal', 'pilea', 10, 4, ''],
       ['Chloe', 'eng', 'calathea', 9, 7, 'Konzertkarten für Juni?'],
-      ['Sam', 'bekannt', 'pearls', 12, 3, ''],
-      ['Jess', 'normal', 'cactus', 9, 2, 'Hat bald Geburtstag.']
+      ['Sam', 'bekannt', 'string_hearts', 12, 3, ''],
+      ['Jess', 'normal', 'schwiegermutter', 9, 2, 'Hat bald Geburtstag.']
     ];
     const types = ['nachricht', 'anruf', 'treffen', 'nachricht'];
     spec.forEach((p, n) => {
@@ -788,6 +1488,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
       const iv = interval(f);
       f.lastWatered = addDays(t, -p[3]); f.lastCounted = f.lastWatered;
       f.streak = p[4]; f.best = p[4] + (n % 2) * 3; f.note = p[5]; f.created = Date.now() - 90 * DAY;
+      if (p[0] === 'Alex') f.pot = 'violet'; if (p[0] === 'Maya') f.pot = 'sky';
       const count = Math.min(p[4], 5) + 1;
       for (let i = 0; i < count; i++) f.history.push({ ts: addDays(f.lastWatered, -i * iv), type: types[(i + n) % 4] });
       s.friends.push(f);
@@ -801,7 +1502,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
   function removeDemo() { S = newState(); save(); }
 
   const api = {
-    DAY, KEY, JOKERS, GRADES, GRADE_ORDER, TYPES, TYPE_LABEL, PLANTS, STATE_LABEL, BADGES,
+    DAY, KEY, JOKERS, GRADES, GRADE_ORDER, gradeName, setGradeName, TYPES, TYPE_LABEL, PLANTS, SKINS, skinOk, STATE_LABEL, BADGES,
     startOfDay, todayTs, addDays, dayDiff, iso, fromIso, uid,
     newState, load, save, getState, setState, interval, grace, stageFor, jokersLeft, active, info, normalize,
     newFriend, water, archive, reactivate, remove, checkBadges, levelInfo, cleanLink, cleanState, demoState, removeDemo
@@ -878,7 +1579,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
   }
 
   function spriteImg(f, I, size) {
-    return h('img', { class: 'sprite', src: SP.spriteURL(f.plant, I.stage, I.wilt), alt: '', width: size || 144, height: size || 144, draggable: 'false' });
+    return h('img', { class: 'sprite', src: SP.spriteURL(f.plant, I.stage, I.wilt, f.pot), alt: '', width: size || 144, height: size || 144, draggable: 'false' });
   }
   function pill(I) {
     return h('span', { class: 'pill pill-' + I.st },
@@ -966,7 +1667,8 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
       else if (r.restarted) toast('Neuer Anfang für ' + f.name + '.');
       else if (r.grew) toast('Gegossen. Streak ' + f.streak + '.');
       else toast('Eingetragen.');
-      L.checkBadges().forEach((b, n) => setTimeout(() => toast('Neues Abzeichen: ' + b.name), 1700 * (n + 1)));
+      L.checkBadges().map(b => 'Neues Abzeichen: ' + b.name).concat(r.unlocked.map(k => 'Neuer Topf für ' + f.name + ': ' + k.label))
+        .forEach((m, n) => setTimeout(() => toast(m), 1700 * (n + 1)));
       render();
     } } }, icon('heart', 2), 'Eintragen');
 
@@ -978,6 +1680,11 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
       alertBox, save
     ]);
     refresh();
+  }
+
+  function potHint(f) {
+    const have = L.SKINS.filter(k => L.skinOk(f, k.id)).length, next = L.SKINS.find(k => k.need > f.best);
+    return h('p', { class: 'muted' }, 'Töpfe: ' + have + ' von ' + L.SKINS.length + ' freigeschaltet. ' + (next ? 'Der nächste („' + next.label + '“) kommt bei Streak ' + next.need + '.' : 'Du hast alle Töpfe.'));
   }
 
   /* ---------- Detail ---------- */
@@ -1003,12 +1710,13 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     openSheet(f.name, [
       h('div', { class: 'd-top' },
         h('div', { class: 'sprite-box px' }, spriteImg(f, I, 128)),
-        h('div', { class: 'd-info' }, h('h3', null, f.name), h('span', { class: 'muted' }, speciesLabel(f.plant) + ' · ' + L.GRADES[f.grade].label), pill(I))),
+        h('div', { class: 'd-info' }, h('h3', null, f.name), h('span', { class: 'muted' }, speciesLabel(f.plant) + ' · ' + L.gradeName(f.grade)), pill(I))),
       h('dl', { class: 'stats' },
         h('div', { class: 'stat' }, h('dt', null, 'Streak'), h('dd', null, String(f.streak))),
         h('div', { class: 'stat' }, h('dt', null, 'Bester Streak'), h('dd', null, String(f.best))),
         h('div', { class: 'stat' }, h('dt', null, 'Nächstes Gießen'), h('dd', null, dueText(I))),
         h('div', { class: 'stat' }, h('dt', null, 'Rhythmus'), h('dd', null, 'alle ' + plural(I.iv, 'Tag', 'Tage')))),
+      potHint(f),
       h('div', { class: 'field' }, h('label', { class: 'lbl', for: 'd-note' }, 'Notiz'), note, counter),
       actions,
       !safeLink && h('p', { class: 'muted' }, 'Mit einem WhatsApp-Link (zum Beispiel https://wa.me/49170…) öffnet „Melden“ direkt den Chat. Die App speichert sonst keine Kontaktdaten.'),
@@ -1024,7 +1732,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
   }
   function openEdit(id) {
     const f = id ? byId(id) : null;
-    const d = { grade: f ? f.grade : 'normal', plant: f ? f.plant : nextPlant(), customOn: !!(f && f.custom) };
+    const d = { grade: f ? f.grade : 'normal', plant: f ? f.plant : nextPlant(), pot: f ? (f.pot || '') : '', customOn: !!(f && f.custom) };
     const err = h('p', { class: 'err', role: 'alert' });
     const nameIn = h('input', { id: 'e-name', type: 'text', maxlength: '24', autocomplete: 'off', placeholder: 'Vorname oder Spitzname', value: f ? f.name : '' });
     const linkIn = h('input', { id: 'e-link', type: 'text', autocomplete: 'off', inputmode: 'url', placeholder: '+49 170 1234567 oder https://wa.me/…', value: f ? f.link : '' });
@@ -1035,14 +1743,31 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     function drawHint() { hint.textContent = 'Standard bei dieser Kategorie: alle ' + plural(L.GRADES[d.grade].days, 'Tag', 'Tage') + '.'; }
     function drawCustom() {
       drawHint();
-      customBox.replaceChildren(h('label', { class: 'check', for: 'e-custom' }, customCb, 'Eigener Rhythmus statt Standard'), d.customOn && h('div', { class: 'field' }, h('label', { class: 'lbl', for: 'e-days' }, 'Alle wie viele Tage?'), numIn), hint);
+      customBox.replaceChildren(...[h('label', { class: 'check', for: 'e-custom' }, customCb, 'Eigener Rhythmus statt Standard'), d.customOn && h('div', { class: 'field' }, h('label', { class: 'lbl', for: 'e-days' }, 'Alle wie viele Tage?'), numIn), hint].filter(Boolean));
     }
     const gradeSeg = segmented([{ id: 'eng', label: 'Eng', sub: '7 Tage' }, { id: 'normal', label: 'Normal', sub: '21 Tage' }, { id: 'bekannt', label: 'Bekannt', sub: '60 Tage' }], d.grade, v => { d.grade = v; drawHint(); }, 'Freundschaftsgrad');
 
-    const picker = h('div', { class: 'picker' });
+    const picker = h('div', { class: 'picker-wrap' });
     function drawPicker() {
-      picker.replaceChildren(...L.PLANTS.map(p => h('button', { type: 'button', class: 'pick', 'aria-pressed': String(d.plant === p), on: { click: () => { d.plant = p; drawPicker(); } } },
-        h('img', { class: 'sprite', src: SP.spriteURL(p, 2, 0), alt: '', width: 72, height: 72 }), speciesLabel(p))));
+      picker.replaceChildren(...SP.GROUPS.map(gr => {
+        const list = L.PLANTS.filter(p => (SP.SPECIES[p] || {}).group === gr);
+        if (!list.length) return null;
+        return h('div', { class: 'pgroup' }, h('h4', null, gr),
+          h('div', { class: 'picker' }, list.map(p => h('button', { type: 'button', class: 'pick', 'aria-pressed': String(d.plant === p), on: { click: () => { d.plant = p; drawPicker(); } } },
+            h('img', { class: 'sprite', src: SP.spriteURL(p, 2, 0, d.pot), alt: '', width: 72, height: 72 }),
+            speciesLabel(p), SP.SPECIES[p].rare && h('span', { class: 'rare' }, 'selten')))));
+      }).filter(Boolean));
+    }
+    const potBox = h('div', { class: 'picker pots' });
+    function drawPots() {
+      if (!f) return;
+      potBox.replaceChildren(...L.SKINS.map(k => {
+        const ok = L.skinOk(f, k.id);
+        return h('button', { type: 'button', class: 'pick' + (ok ? '' : ' lock'), 'aria-pressed': String(d.pot === k.id), 'aria-disabled': String(!ok),
+          on: { click: () => { if (!ok) { toast('Dieser Topf wird bei Streak ' + k.need + ' frei. Dein bester Streak: ' + f.best + '.'); return; } d.pot = k.id; drawPots(); drawPicker(); } } },
+          h('img', { class: 'sprite', src: SP.spriteURL(d.plant, 2, 0, k.id), alt: '', width: 72, height: 72 }),
+          k.label, h('span', { class: 'rare' }, ok ? (k.need ? 'frei' : '') : 'ab Streak ' + k.need));
+      }));
     }
 
     const saveBtn = h('button', { type: 'button', class: 'btn primary full', on: { click: () => {
@@ -1055,7 +1780,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
         custom = Math.round(+numIn.value);
         if (!(custom >= 1 && custom <= 365)) { err.textContent = 'Der Rhythmus muss zwischen 1 und 365 Tagen liegen.'; numIn.focus(); return; }
       }
-      if (f) { Object.assign(f, { name, grade: d.grade, custom, plant: d.plant, link: lk.value }); L.save(); toast('Gespeichert.'); }
+      if (f) { Object.assign(f, { name, grade: d.grade, custom, plant: d.plant, pot: L.skinOk(f, d.pot) ? d.pot : '', link: lk.value }); L.save(); toast('Gespeichert.'); }
       else {
         L.getState().friends.push(L.newFriend({ name, grade: d.grade, custom, plant: d.plant, link: lk.value })); L.save();
         toast(name + ' ist eingepflanzt.');
@@ -1068,11 +1793,12 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
       h('div', { class: 'field' }, h('label', { class: 'lbl', for: 'e-name' }, 'Name'), nameIn),
       h('div', { class: 'field' }, h('span', { class: 'lbl' }, 'Freundschaftsgrad'), gradeSeg, customBox),
       h('div', { class: 'field' }, h('span', { class: 'lbl' }, 'Pflanze'), picker),
+      f && h('div', { class: 'field' }, h('span', { class: 'lbl' }, 'Topf'), potBox, h('p', { class: 'muted' }, 'Neue Töpfe schaltest du frei, indem du mit dieser Freundschaft einen langen Streak aufbaust.')),
       h('div', { class: 'field' }, h('label', { class: 'lbl', for: 'e-link' }, 'Messenger-Link (optional)'), linkIn,
         h('p', { class: 'muted' }, 'Telefonnummer mit Ländervorwahl oder ein Link. Daraus wird ein WhatsApp-Link, mehr speichert die App nicht.')),
       err, saveBtn
     ]);
-    drawCustom(); drawPicker();
+    drawCustom(); drawPicker(); drawPots();
   }
 
   /* ---------- Einstellungen ---------- */
@@ -1103,7 +1829,13 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     }
 
     const urgent = L.active().filter(f => ['dringlich', 'verwelkt'].includes(L.info(f).st)).length;
+    const nameBox = h('div', { class: 'sec' }, h('span', { class: 'lbl' }, 'Kategorien umbenennen'),
+      h('p', { class: 'muted' }, 'So heißen die Gruppen im Garten. Leer lassen für den Standardnamen.'),
+      L.GRADE_ORDER.map(id => h('div', { class: 'field' }, h('label', { class: 'lbl', for: 'gn-' + id }, L.GRADES[id].plural),
+        h('input', { id: 'gn-' + id, type: 'text', maxlength: 28, value: L.gradeName(id), placeholder: L.GRADES[id].plural,
+          on: { change: e => { L.setGradeName(id, e.target.value); L.save(); e.target.value = L.gradeName(id); render(); } } }))));
     openSheet('Einstellungen', [
+      nameBox,
       h('div', { class: 'sec' }, h('span', { class: 'lbl' }, 'Wiederbelebungen'),
         h('p', null, 'Diesen Monat noch ' + L.jokersLeft() + ' von ' + L.JOKERS + ' frei. Der Vorrat gilt für alle Freundschaften zusammen.')),
       h('div', { class: 'sec' }, h('span', { class: 'lbl' }, 'Benachrichtigungen'),
@@ -1148,7 +1880,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
   }
   function group(title, list, cls, ic) {
     return h('section', { class: 'group ' + (cls || '') },
-      h('h2', { class: 'group-title' }, ic && icon(ic, 2), title, h('span', { class: 'count' }, String(list.length))),
+      h('h2', { class: 'group-title' }, ic && icon(ic, 2), title,),
       h('div', { class: 'grid' }, list.map(card)));
   }
 
@@ -1157,7 +1889,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     if (S().demo) wrap.append(h('div', { class: 'banner' }, h('p', null, 'Das sind Beispieldaten zum Ausprobieren.'),
       h('button', { type: 'button', class: 'btn sm', on: { click: openSettings } }, 'Entfernen')));
     if (!act.length) {
-      wrap.append(h('div', { class: 'empty' }, h('img', { class: 'sprite', src: SP.spriteURL('cactus', 0, 0), alt: '', width: 120, height: 120 }),
+      wrap.append(h('div', { class: 'empty' }, h('img', { class: 'sprite', src: SP.spriteURL('cactus', 1, 0), alt: '', width: 120, height: 120 }),
         h('h2', null, 'Dein Garten ist leer'), h('p', { class: 'muted' }, 'Jede Freundschaft ist eine Pflanze. Pflanze die erste.'),
         h('button', { type: 'button', class: 'btn primary', on: { click: () => openEdit() } }, icon('plus', 2), 'Freundschaft hinzufügen')));
       return wrap;
@@ -1167,7 +1899,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     if (urgent.length) wrap.append(group('Dringlich', urgent, 'urgent', 'drop'));
     L.GRADE_ORDER.forEach(g => {
       const list = rest.filter(f => f.grade === g).sort(byUrgency);
-      if (list.length) wrap.append(group(L.GRADES[g].plural, list));
+      if (list.length) wrap.append(group(L.gradeName(g), list));
     });
     return wrap;
   }
@@ -1178,7 +1910,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     if (!list.length) { wrap.append(h('p', null, 'Das Archiv ist leer.')); return wrap; }
     list.forEach(f => {
       const I = L.info(f);
-      wrap.append(h('div', { class: 'arch px' }, h('img', { class: 'sprite', src: SP.spriteURL(f.plant, I.stage, 0), alt: '', width: 64, height: 64 }),
+      wrap.append(h('div', { class: 'arch px' }, h('img', { class: 'sprite', src: SP.spriteURL(f.plant, I.stage, 0, f.pot), alt: '', width: 64, height: 64 }),
         h('div', { class: 'who' }, h('b', null, f.name), h('span', { class: 'muted' }, 'Pausiert seit ' + fmtDate(f.archivedAt || Date.now()) + ' · Streak ' + f.streak)),
         h('div', { class: 'btns' },
           h('button', { type: 'button', class: 'btn sm primary', on: { click: () => { L.reactivate(f); toast(f.name + ' ist zurück im Garten.'); render(); } } }, 'Reaktivieren'),
@@ -1199,7 +1931,7 @@ textarea.sticky { resize: none; min-height: 88px; background: var(--note); color
     wrap.append(h('section', { class: 'group' }, h('h2', { class: 'group-title' }, 'Abzeichen', h('span', { class: 'count' }, Object.keys(st.badges).length + '/' + L.BADGES.length)),
       h('div', { class: 'badges' }, L.BADGES.map(b => {
         const got = !!st.badges[b.id];
-        return h('div', { class: 'badge px' + (got ? '' : ' locked') }, icon('star', 3), h('h3', null, b.name), h('p', null, b.desc), h('p', null, got ? 'Erreicht' : 'Noch offen'));
+        return h('div', { class: 'badge px' + (got ? '' : ' locked') }, h('img', { class: 'bicon', src: SP.badgeURL(b.id), alt: '', width: 80, height: 80 }), h('h3', null, b.name), h('p', null, b.desc), h('p', null, got ? 'Erreicht' : 'Noch offen'));
       }))));
     return wrap;
   }
