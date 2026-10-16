@@ -1,0 +1,1236 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#c8694a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Plant a friend">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}body{margin:0}</style>
+<title>Plant a friend</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: eine Bildschirm-App. Kopfleiste oben, scrollender Garten, Tab-Leiste unten, Sheets von unten. */
+:root {
+  --bg: #fbf1dc; --bg2: #f4e2bf; --head: #c8694a; --title: #b5593a;
+  --card: #f9cda8; --floor: #fde0c4; --btn: #fff3dc;
+  --line: #b5593a; --ink: #4f2818; --ink2: #7d4d38;
+  --green: #7aa84c; --on-green: #2a1a10;
+  --f-ok: #8fbe5a; --f-warn: #e8ae3a; --f-wilt: #cf9a72;
+  --warn: #b3382c; --on-warn: #ffffff; --amber: #d98e12;
+  --note: #fff0a6; --note-ink: #4e3f0c; --shade: rgba(60, 25, 10, .16);
+  --font: 'Pixelify Sans', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #2a1a13; --bg2: #36241b; --head: #8d482f; --title: #f0b08c;
+    --card: #573727; --floor: #69442f; --btn: #7a4e38;
+    --line: #d4845c; --ink: #fbe9d2; --ink2: #d9b9a0;
+    --green: #86b25a; --on-green: #241509;
+    --f-ok: #47702f; --f-warn: #8c6012; --f-wilt: #74492f;
+    --warn: #ff8e7e; --on-warn: #2a0d08; --amber: #f0b43c;
+    --note: #f0dc8a; --note-ink: #40330a; --shade: rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #2a1a13; --bg2: #36241b; --head: #8d482f; --title: #f0b08c;
+  --card: #573727; --floor: #69442f; --btn: #7a4e38;
+  --line: #d4845c; --ink: #fbe9d2; --ink2: #d9b9a0;
+  --green: #86b25a; --on-green: #241509;
+  --f-ok: #47702f; --f-warn: #8c6012; --f-wilt: #74492f;
+  --warn: #ff8e7e; --on-warn: #2a0d08; --amber: #f0b43c;
+  --note: #f0dc8a; --note-ink: #40330a; --shade: rgba(0, 0, 0, .35);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 500 16px/1.35 var(--font); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--head); z-index: 10; }
+body::after { content: ""; position: fixed; inset: auto 0 0; height: env(safe-area-inset-bottom, 0px); background: var(--bg2); z-index: 10; }
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+svg { display: block; flex: none; shape-rendering: crispEdges; }
+h1, h2, h3, p, ul, dl, dd { margin: 0; }
+ul { padding: 0; list-style: none; }
+
+/* Pixel-Rahmen: vier Schatten statt border, so entstehen abgestufte Ecken. */
+.px { box-shadow: 0 -3px 0 0 var(--line), 0 3px 0 0 var(--line), -3px 0 0 0 var(--line), 3px 0 0 0 var(--line); }
+.px-s { box-shadow: 0 -2px 0 0 var(--line), 0 2px 0 0 var(--line), -2px 0 0 0 var(--line), 2px 0 0 0 var(--line); }
+
+#app { display: flex; flex-direction: column; height: 100%; }
+
+/* Kopfleiste */
+.top { flex: none; background: var(--head); padding: 12px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px)); }
+.bar { display: flex; align-items: center; gap: 6px; max-width: 720px; margin: 0 auto; padding: 6px 8px; background: var(--bg); }
+.bar h1 { flex: 1; min-width: 0; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: clamp(16px, 5.2vw, 24px); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--title); }
+.icon-btn { width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 0; background: transparent; color: var(--title); }
+.icon-btn:active { transform: translateY(2px); }
+
+/* Inhalt */
+main { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 18px max(16px, env(safe-area-inset-right, 0px)) 28px max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-direction: column; gap: 22px; }
+.group { display: flex; flex-direction: column; gap: 14px; }
+.group-title { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--title); }
+.group-title .count { margin-left: auto; padding: 0 8px; background: var(--card); color: var(--ink); font-size: 13px; }
+.group.urgent .group-title { color: var(--warn); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px 14px; }
+
+/* Karte */
+.card { min-width: 0; display: flex; flex-direction: column; gap: 6px; padding: 10px 10px 8px; background: var(--card); cursor: pointer; }
+.sprite-box { position: relative; display: grid; place-items: end center; background: linear-gradient(to top, var(--floor) 0 24%, transparent 24%); }
+.sprite { width: 100%; max-width: 144px; aspect-ratio: 1; image-rendering: pixelated; }
+.streak { position: absolute; top: 0; right: 0; display: inline-flex; align-items: center; gap: 3px; padding: 1px 6px; background: var(--btn); font-size: 13px; font-weight: 700; color: var(--ink); }
+.streak svg { color: var(--amber); }
+.species { text-align: center; font-size: 13px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.name-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; }
+.fname { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 17px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
+
+.pill { position: relative; flex: none; display: inline-flex; align-items: center; gap: 3px; padding: 1px 7px; overflow: hidden; background: var(--btn); font-size: 12px; font-weight: 700; white-space: nowrap; }
+.pill i { position: absolute; inset: 0 auto 0 0; background: var(--f-ok); }
+.pill > svg, .pill > b { position: relative; }
+.pill-dringlich i { background: var(--f-warn); }
+.pill-verwelkt i { background: var(--f-wilt); }
+.pill-gerissen i { width: 0 !important; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 6px 16px; margin-bottom: 5px;
+  border: 0; background: var(--btn); color: var(--ink); font-weight: 700; letter-spacing: .03em; text-decoration: none; text-align: center;
+  box-shadow: 0 -2px 0 0 var(--line), 0 2px 0 0 var(--line), -2px 0 0 0 var(--line), 2px 0 0 0 var(--line), 0 5px 0 0 var(--line);
+}
+.btn:active { transform: translateY(3px); box-shadow: 0 -2px 0 0 var(--line), 0 2px 0 0 var(--line), -2px 0 0 0 var(--line), 2px 0 0 0 var(--line), 0 2px 0 0 var(--line); }
+.btn.sm { min-height: 38px; padding: 4px 10px; font-size: 14px; }
+.btn.full { width: 100%; }
+.btn.primary { background: var(--green); color: var(--on-green); }
+.btn.danger { background: var(--warn); color: var(--on-warn); }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: .5; pointer-events: none; }
+.card .btn { width: 100%; }
+
+/* Tab-Leiste */
+.tabs { flex: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; background: var(--bg2); border-top: 3px solid var(--line); padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); }
+.tab { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px 9px; border: 0; background: transparent; color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.tab .ic { height: 27px; display: flex; align-items: flex-end; }
+.tab[aria-current="page"] { background: var(--green); color: var(--on-green); }
+
+/* Hinweise */
+.banner { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 12px; background: var(--bg2); border: 3px dashed var(--line); }
+.banner p { flex: 1; min-width: 160px; font-size: 14px; }
+.empty { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 24px 8px; text-align: center; }
+.empty .sprite { max-width: 120px; }
+.muted { color: var(--ink2); font-size: 14px; }
+.err { min-height: 0; color: var(--warn); font-size: 14px; }
+.err:empty { display: none; }
+
+/* Sheets */
+.overlay {
+  position: fixed; inset: 0; z-index: 20; display: flex; align-items: flex-end; justify-content: center; background: rgba(40, 18, 8, .55);
+  padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(14px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+}
+.sheet { width: 100%; max-width: 520px; max-height: 100%; display: flex; flex-direction: column; background: var(--bg); animation: rise .2s steps(4) both; }
+@keyframes rise { from { transform: translateY(28px); opacity: .3; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .sheet { animation: none; } }
+.sheet-head { flex: none; display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 16px; border-bottom: 3px solid var(--line); }
+.sheet-head h2 { flex: 1; min-width: 0; font-size: 19px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--title); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sheet-head .icon-btn { color: var(--ink); }
+.sheet-body { min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; padding: 16px 16px 14px; }
+
+/* Formulare */
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.lbl { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }
+input[type="text"], input[type="number"], input[type="date"], textarea {
+  width: 100%; min-height: 44px; padding: 8px 10px; border: 0; border-radius: 0; background: var(--btn); color: var(--ink);
+  box-shadow: 0 -2px 0 0 var(--line), 0 2px 0 0 var(--line), -2px 0 0 0 var(--line), 2px 0 0 0 var(--line);
+}
+textarea { resize: vertical; min-height: 96px; }
+textarea.sticky { resize: none; min-height: 88px; background: var(--note); color: var(--note-ink); box-shadow: 4px 4px 0 0 var(--shade); }
+.check { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.check input { width: 22px; height: 22px; accent-color: var(--green); flex: none; }
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 10px; }
+.seg-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 48px; padding: 6px 4px; border: 0; background: var(--btn); color: var(--ink); font-weight: 700; text-align: center; box-shadow: 0 -2px 0 0 var(--line), 0 2px 0 0 var(--line), -2px 0 0 0 var(--line), 2px 0 0 0 var(--line); }
+.seg-btn small { font-size: 12px; font-weight: 500; }
+.seg-btn.on { background: var(--green); color: var(--on-green); }
+.picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pick { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 2px 6px; border: 0; background: var(--card); color: var(--ink); font-size: 12px; font-weight: 700; text-align: center; box-shadow: 0 -2px 0 0 transparent, 0 2px 0 0 transparent, -2px 0 0 0 transparent, 2px 0 0 0 transparent; }
+.pick .sprite { max-width: 72px; }
+.pick[aria-pressed="true"] { box-shadow: 0 -3px 0 0 var(--ink), 0 3px 0 0 var(--ink), -3px 0 0 0 var(--ink), 3px 0 0 0 var(--ink); background: var(--floor); }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.row > * { flex: 1 1 140px; }
+
+/* Detail */
+.d-top { display: flex; gap: 14px; align-items: center; }
+.d-top .sprite-box { flex: none; width: 128px; background: var(--card); }
+.d-info { min-width: 0; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.d-info h3 { font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; overflow-wrap: anywhere; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stat { padding: 8px 10px; background: var(--card); }
+.stat dt { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }
+.stat dd { font-size: 17px; font-weight: 700; }
+.hist li { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 2px dotted var(--line); font-size: 15px; }
+.hist li:last-child { border-bottom: 0; }
+.counter { align-self: flex-end; font-size: 12px; color: var(--ink2); }
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 12px; }
+.actions .full { grid-column: 1 / -1; }
+
+/* Abzeichen */
+.lvl { display: flex; flex-direction: column; gap: 10px; padding: 14px; background: var(--card); }
+.lvl h3 { font-size: 24px; font-weight: 700; text-transform: uppercase; }
+.meter { height: 16px; background: var(--btn); }
+.meter i { display: block; height: 100%; background: var(--green); }
+.hearts { display: flex; gap: 6px; align-items: center; }
+.heart { color: var(--ink2); opacity: .35; }
+.heart.on { color: #d6483a; opacity: 1; }
+.badges { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px 14px; }
+.badge { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px; background: var(--card); }
+.badge h3 { font-size: 16px; font-weight: 700; }
+.badge p { font-size: 13px; color: var(--ink2); }
+.badge svg { color: var(--amber); }
+.badge.locked { opacity: .6; }
+.badge.locked svg { color: var(--ink2); }
+
+/* Archiv */
+.arch { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px; background: var(--card); }
+.arch .sprite { width: 64px; flex: none; }
+.arch .who { flex: 1 1 120px; min-width: 0; }
+.arch .who b { display: block; font-size: 17px; text-transform: uppercase; overflow-wrap: anywhere; }
+.arch .btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.json { min-height: 120px; font-size: 12px; font-family: ui-monospace, Menlo, Consolas, monospace; }
+.sec { display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 3px dotted var(--line); }
+.sec:first-child { padding-top: 0; border-top: 0; }
+.plain-list { display: flex; flex-direction: column; gap: 8px; }
+.plain-list li { display: flex; justify-content: space-between; gap: 10px; }
+
+#toast { position: fixed; left: 50%; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); z-index: 30; max-width: min(92vw, 420px); padding: 8px 14px; transform: translateX(-50%); background: var(--ink); color: var(--bg); font-weight: 700; text-align: center; pointer-events: none; opacity: 0; }
+#toast.show { opacity: 1; }
+
+</style>
+<div id="app">
+  <header class="top">
+    <div class="bar px">
+      <button id="menu" class="icon-btn" type="button" aria-label="Einstellungen"></button>
+      <h1>Plant a friend</h1>
+      <button id="add" class="icon-btn" type="button" aria-label="Freundschaft hinzufügen"></button>
+    </div>
+  </header>
+  <main id="main" aria-live="off"></main>
+  <nav id="tabs" class="tabs" aria-label="Bereiche"></nav>
+  <div id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+/* Pixel-Pflanzen: zeichnet 48x48-Sprites per Code (keine Bilddateien noetig). */
+(function (root) {
+  'use strict';
+  const W = 48, H = 48, BASE = 33;
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  const hex2rgb = h => { h = h.replace('#', ''); return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]; };
+  const rgb2hex = r => '#' + r.map(v => Math.round(clamp(v, 0, 255)).toString(16).padStart(2, '0')).join('');
+  const mix = (a, b, t) => { const A = hex2rgb(a), B = hex2rgb(b); return rgb2hex(A.map((v, i) => v + (B[i] - v) * t)); };
+  const frac = x => x - Math.floor(x);
+  const rnd = (i, s) => frac(Math.sin(i * 12.9898 + (s || 0) * 78.233) * 43758.5453);
+  const rad = d => d * Math.PI / 180;
+
+  class Grid {
+    constructor() { this.c = new Array(W * H).fill(null); this.k = new Array(W * H).fill(0); this.potO = '#6e3219'; }
+    set(x, y, col, k) {
+      x = Math.round(x); y = Math.round(y);
+      if (!col || x < 0 || y < 0 || x >= W || y >= H) return;
+      this.c[y * W + x] = col; this.k[y * W + x] = k || 1;
+    }
+    get(x, y) { return (x < 0 || y < 0 || x >= W || y >= H) ? null : this.c[y * W + x]; }
+  }
+
+  const rect = (g, x, y, w, h, col, k) => { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) g.set(x + i, y + j, col, k); };
+
+  function line(g, x0, y0, x1, y1, col, k) {
+    x0 = Math.round(x0); y0 = Math.round(y0); x1 = Math.round(x1); y1 = Math.round(y1);
+    const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+    let e = dx + dy;
+    for (let n = 0; n < 400; n++) {
+      g.set(x0, y0, col, k);
+      if (x0 === x1 && y0 === y1) break;
+      const e2 = 2 * e;
+      if (e2 >= dy) { e += dy; x0 += sx; }
+      if (e2 <= dx) { e += dx; y0 += sy; }
+    }
+  }
+
+  /* Gedrehte Ellipse. theta = Winkel der Hauptachse von "senkrecht nach oben", nach rechts positiv.
+     f(u,v): u laeuft entlang der Achse (-1..1, +1 = Spitze), v quer dazu. Rueckgabe: Farbe oder null. */
+  function shape(g, cx, cy, a, b, theta, f, k) {
+    const dx = Math.sin(theta), dy = -Math.cos(theta), qx = -dy, qy = dx;
+    const R = Math.ceil(Math.max(a, b)) + 2;
+    for (let y = Math.floor(cy) - R; y <= Math.ceil(cy) + R; y++) {
+      for (let x = Math.floor(cx) - R; x <= Math.ceil(cx) + R; x++) {
+        const rx = x + 0.5 - cx, ry = y + 0.5 - cy;
+        const col = f((rx * dx + ry * dy) / a, (rx * qx + ry * qy) / b);
+        if (col) g.set(x, y, col, k || 1);
+      }
+    }
+  }
+
+  const GREEN = { d: '#2c6a3e', m: '#3f9148', l: '#7ac761', o: '#1c472a', s: '#3a7c3c' };
+  const WILT = { d: '#6a5827', m: '#98893b', l: '#c6b55e', o: '#47381b', s: '#7b6b31' };
+  const palette = w => { const p = {}; for (const k in GREEN) p[k] = mix(GREEN[k], WILT[k], w); return p; };
+
+  const POTS = {
+    terra: { m: '#cf6f3f', d: '#a4532b', l: '#e69160', o: '#6e3219' },
+    cream: { m: '#f1e3d3', d: '#d3bda7', l: '#fff7ec', o: '#7a4a30' },
+    mustard: { m: '#e4b04a', d: '#bb8a2f', l: '#f4cd78', o: '#6e4a14' }
+  };
+  const SOIL_M = '#55361f', SOIL_D = '#3f2819';
+
+  function drawPot(g, style, deco) {
+    const P = POTS[style]; g.potO = P.o;
+    rect(g, 16, 33, 16, 1, SOIL_M, 2);
+    rect(g, 15, 34, 18, 1, SOIL_D, 2);
+    rect(g, 14, 35, 20, 1, P.l, 2);
+    rect(g, 14, 36, 20, 1, P.m, 2);
+    rect(g, 14, 37, 20, 1, P.d, 2);
+    const wAt = y => 16 - Math.round((y - 38) / 2);
+    for (let y = 38; y <= 46; y++) {
+      const w = wAt(y), x0 = Math.round(24 - w / 2);
+      rect(g, x0, y, w, 1, P.m, 2);
+      rect(g, x0 + 1, y, 2, 1, P.l, 2);
+      rect(g, x0 + w - 3, y, 3, 1, P.d, 2);
+    }
+    if (deco === 'dots') {
+      for (let i = 0; i < 18; i++) {
+        const x = 17 + Math.floor(rnd(i, 3) * 13), y = 38 + Math.floor(rnd(i, 4) * 9);
+        if (g.get(x, y) === P.m) g.set(x, y, P.d, 2);
+      }
+    }
+    if (deco === 'band') {
+      for (let y = 40; y <= 42; y++) {
+        const w = wAt(y), x0 = Math.round(24 - w / 2);
+        for (let x = x0 + 3; x < x0 + w - 3; x++) g.set(x, y, (x + y) % 2 ? P.l : P.d, 2);
+      }
+    }
+    if (deco === 'stripe') {
+      for (let y = 40; y <= 41; y++) {
+        const w = wAt(y), x0 = Math.round(24 - w / 2);
+        for (let x = x0 + 1; x < x0 + w - 1; x++) g.set(x, y, '#cf6f3f', 2);
+      }
+    }
+  }
+
+  function outline(g, P) {
+    const out = [];
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      if (g.c[y * W + x]) continue;
+      let hit = 0;
+      [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(d => {
+        const nx = x + d[0], ny = y + d[1];
+        if (nx < 0 || ny < 0 || nx >= W || ny >= H) return;
+        const j = ny * W + nx;
+        if (g.c[j]) hit = Math.max(hit, g.k[j]);
+      });
+      if (hit) out.push([x, y, hit === 2 ? g.potO : P.o]);
+    }
+    out.forEach(o => g.set(o[0], o[1], o[2], 3));
+  }
+
+  /* ---------- Pflanzen ---------- */
+
+  function sprout(g, w, P) {
+    const tx = 24 + w * 3, ty = 28 + w * 2;
+    line(g, 24, BASE, tx, ty, P.s);
+    [-1, 1].forEach(sd => {
+      const ang = sd * (55 + w * 65), a = 3.4, b = 1.8;
+      const cx = tx + Math.sin(rad(ang)) * a * 0.9, cy = ty - Math.cos(rad(ang)) * a * 0.9;
+      shape(g, cx, cy, a, b, rad(ang), (u, v) => (u * u + v * v > 1) ? null : (v * sd > 0.1 ? P.d : P.m));
+    });
+  }
+
+  function pilea(g, st, w, P) {
+    if (st === 0) return sprout(g, w, P);
+    const N = [0, 4, 7, 11][st], R = [0, 2.4, 3.1, 3.6][st], D0 = [0, 7, 8, 9][st], D1 = [0, 11, 17, 24][st];
+    const L = [];
+    for (let i = 0; i < N; i++) {
+      const t = i / (N - 1) * 2 - 1;
+      let th = (t + (rnd(i, 1) - 0.5) * 0.2) * 78;
+      th += (th < 0 ? -1 : 1) * w * 50;
+      const d = (D0 + (D1 - D0) * (1 - Math.abs(t) * 0.5) * (0.65 + 0.35 * rnd(i, 2))) * (1 - 0.12 * w);
+      L.push({ x: 24 + Math.sin(rad(th)) * d, y: BASE - Math.cos(rad(th)) * d });
+    }
+    L.sort((a, b) => a.y - b.y);
+    L.forEach(p => line(g, 24, BASE, p.x, p.y, P.s));
+    const r = R * (1 - 0.15 * w);
+    L.forEach(p => shape(g, p.x, p.y, r, r, 0, (u, v) => {
+      const q = u * u + v * v;
+      if (q > 1) return null;
+      if (q < 0.1) return P.l;
+      return (u - v) > 0.55 ? P.l : ((u - v) < -0.45 ? P.d : P.m);
+    }));
+  }
+
+  const HOLES = [[0.15, 0.42, 1.4], [-0.3, 0.36, 1.3], [0.5, 0.3, 1.1]];
+  function monstera(g, st, w, P) {
+    if (st === 0) return sprout(g, w, P);
+    const N = [0, 2, 4, 5][st], A = [0, 5, 7, 8.5][st], DD = [0, 9, 13, 16][st];
+    const L = [];
+    for (let i = 0; i < N; i++) {
+      const t = N === 1 ? 0 : i / (N - 1) * 2 - 1;
+      let th = t * 68 + (rnd(i, 5) - 0.5) * 10;
+      const sg = th < 0 ? -1 : 1;
+      th += sg * w * 55;
+      const d = DD * (0.7 + 0.3 * (1 - Math.abs(t))) * (0.85 + 0.15 * rnd(i, 6)) * (1 - 0.12 * w);
+      const sx = 24 + Math.sin(rad(th)) * d, sy = BASE - Math.cos(rad(th)) * d;
+      L.push({ sx, sy, th, cx: sx + Math.sin(rad(th)) * A * 0.85, cy: sy - Math.cos(rad(th)) * A * 0.85 });
+    }
+    L.sort((p, q) => p.cy - q.cy);
+    L.forEach(p => line(g, 24, BASE, p.sx, p.sy, P.s));
+    const a = A, b = A * 0.78;
+    L.forEach(p => shape(g, p.cx, p.cy, a, b, rad(p.th), (u, v) => {
+      if (u < -1 || u > 1) return null;
+      const wm = Math.sqrt(1 - u * u) * (1 - 0.22 * u), av = Math.abs(v);
+      if (av > wm) return null;
+      if (a >= 6) for (const h of HOLES) if (Math.hypot((u - h[0]) * a, (av - h[1]) * b) < h[2]) return null;
+      if (av < 0.1) return P.l;
+      return (v > 0.3 || u < -0.6) ? P.d : P.m;
+    }));
+  }
+
+  function calathea(g, st, w, P) {
+    if (st === 0) return sprout(g, w, P);
+    const N = [0, 3, 5, 7][st], A = [0, 6, 9, 11][st], DD = [0, 4, 6, 7][st];
+    const L = [];
+    for (let i = 0; i < N; i++) {
+      const t = N === 1 ? 0 : i / (N - 1) * 2 - 1;
+      let th = t * 50 + (rnd(i, 7) - 0.5) * 12;
+      th += (th < 0 ? -1 : 1) * w * 58;
+      const d = (DD * (0.6 + 0.4 * rnd(i, 8)) + A * 0.9) * (1 - 0.1 * w);
+      L.push({ th, cx: 24 + Math.sin(rad(th)) * d, cy: BASE - Math.cos(rad(th)) * d });
+    }
+    L.sort((p, q) => p.cy - q.cy);
+    const b = A * 0.62;
+    L.forEach(p => shape(g, p.cx, p.cy, A, b, rad(p.th), (u, v) => {
+      const q = u * u + v * v;
+      if (q > 1) return null;
+      const av = Math.abs(v);
+      if (av < 0.08) return P.l;
+      if (av > 0.86 || q > 0.9) return P.d;
+      const s = av * 3.4 - u * 1.2;
+      return (((Math.floor(s) % 2) + 2) % 2) ? P.l : P.m;
+    }));
+  }
+
+  const BLADES = [
+    [[-10, 7, 1.6], [12, 8, 1.6]],
+    [[-18, 14, 2.4], [0, 19, 2.8], [16, 15, 2.4]],
+    [[-30, 15, 2.6], [-14, 22, 3.2], [2, 26, 3.4], [16, 21, 3.2], [29, 16, 2.6]],
+    [[-38, 15, 2.6], [-26, 22, 3.2], [-12, 28, 3.8], [0, 31, 4], [11, 29, 3.8], [24, 23, 3.2], [36, 16, 2.6]]
+  ];
+  function blade(g, x0, ang, len, wm, w, P) {
+    const bend = (ang < 0 ? -1 : 1) * w * 70, steps = Math.ceil(len * 2.4), ds = len / steps;
+    let x = x0, y = BASE + 1;
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps, a = rad(ang + bend * t * t);
+      if (i > 0) { x += Math.sin(a) * ds; y -= Math.cos(a) * ds; }
+      const half = wm * Math.sin(Math.PI * Math.pow(t, 0.7)) + 0.6 * (1 - t);
+      const nx = Math.cos(a), ny = Math.sin(a), band = Math.floor(t * len / 3.2) % 2;
+      for (let s = -half; s <= half + 0.01; s += 0.5) {
+        const edge = Math.abs(s) > half - 0.9;
+        g.set(x + nx * s, y + ny * s, edge ? P.l : (band ? P.d : P.m), 1);
+      }
+    }
+  }
+  function snake(g, st, w, P) {
+    BLADES[st].slice().sort((p, q) => Math.abs(q[0]) - Math.abs(p[0]))
+      .forEach(b => blade(g, 24 + b[0] * 0.12, b[0], b[1] * (1 - 0.2 * w), b[2], w, P));
+  }
+
+  function cactus(g, st, w, P) {
+    const Hh = [7, 14, 20, 26][st], RX = [3.5, 5, 6.2, 7][st], top = BASE - Hh;
+    const off = y => Math.round(w * Math.pow(BASE - y, 2) / (Hh * 6));
+    const put = (x, y, c) => g.set(x + off(y), y, c, 1);
+    for (let y = top; y <= BASE; y++) {
+      const t = y - top + 0.5;
+      const half = t < RX ? Math.sqrt(Math.max(0, RX * RX - (RX - t) * (RX - t))) : RX;
+      for (let x = Math.ceil(24 - half); x < Math.floor(24 + half); x++) {
+        const u = (x + 0.5 - 24) / RX;
+        const rib = RX >= 5 && (Math.abs(u) < 0.14 || Math.abs(Math.abs(u) - 0.62) < 0.1);
+        put(x, y, rib ? P.d : (u < -0.45 ? P.d : (u > 0.35 ? P.l : P.m)));
+        if (rib && (y + (u < 0 ? 0 : 2)) % 4 === 0) put(x, y, '#f4eec0');
+      }
+    }
+    const arm = (side, yy, up) => {
+      const edge = Math.round(24 + side * RX);
+      const x0 = side < 0 ? edge - 5 : edge + 2;
+      const xa = side < 0 ? x0 : edge - 1, xb = side < 0 ? edge + 1 : x0 + 2;
+      for (let x = xa; x <= xb; x++) for (let j = 0; j < 3; j++) put(x, yy + j, j === 2 ? P.d : P.m);
+      for (let y = yy - up; y < yy + 3; y++) for (let i = 0; i < 3; i++) {
+        if (y === yy - up && i !== 1) continue;
+        put(x0 + i, y, i === 0 ? P.d : (i === 2 ? P.l : P.m));
+      }
+    };
+    if (st >= 2) arm(-1, BASE - Math.round(Hh * 0.42), st === 3 ? 8 : 6);
+    if (st >= 3) arm(1, BASE - Math.round(Hh * 0.6), 5);
+    if (st === 3 && w < 0.5) {
+      const pk = '#ec6a8c';
+      put(24, top - 2, pk); put(23, top - 1, pk); put(25, top - 1, pk); put(24, top, pk); put(24, top - 1, '#f8d34a');
+    }
+  }
+
+  const MOUND = [
+    [[24, 31], [21, 32], [27, 32]],
+    [[18, 32], [22, 31], [26, 31], [30, 32], [20, 29], [28, 29]],
+    [[17, 32], [21, 31], [26, 31], [31, 32], [19, 28], [24, 28], [29, 28], [23, 25]],
+    [[16, 32], [20, 31], [25, 31], [30, 31], [33, 32], [18, 28], [23, 28], [28, 28], [32, 28], [21, 25], [26, 25]]
+  ];
+  const STRANDS = [
+    [],
+    [[16, 6], [32, 8]],
+    [[15, 10], [18, 15], [30, 13], [33, 17]],
+    [[15, 14], [18, 22], [21, 9], [29, 11], [32, 24], [35, 16]]
+  ];
+  function pearl(g, x, y, r, P) {
+    x = Math.round(x); y = Math.round(y);
+    shape(g, x, y, r + 0.9, r + 0.9, 0, (u, v) => (u * u + v * v > 1) ? null : P.o);
+    shape(g, x, y, r, r, 0, (u, v) => {
+      if (u * u + v * v > 1) return null;
+      return (u > 0.15 && v < -0.15) ? P.l : ((u < -0.2 && v > 0.2) ? P.d : P.m);
+    });
+  }
+  function pearls(g, st, w, P) {
+    const r = 1.55 * (1 - 0.3 * w);
+    MOUND[st].forEach(p => pearl(g, p[0], p[1] + w * 1.5, r, P));
+    STRANDS[st].forEach((sd, n) => {
+      const len = sd[1] * (1 - 0.3 * w);
+      let prev = null;
+      for (let s = 0; s <= len; s += 3.2) {
+        const x = Math.round(sd[0] + 1.3 * Math.sin(s * 0.45 + n)), y = Math.round(35 + s);
+        if (prev) line(g, prev[0], prev[1], x, y, P.s);
+        prev = [x, y];
+      }
+      for (let s = 0; s <= len; s += 3.2) pearl(g, sd[0] + 1.3 * Math.sin(s * 0.45 + n), 35 + s, r, P);
+    });
+  }
+
+  const SPECIES = {
+    monstera: { label: 'Monstera Adansonii', pot: 'cream', deco: 'dots', draw: monstera },
+    snake: { label: 'Bogenhanf', pot: 'terra', deco: '', draw: snake },
+    pilea: { label: 'Pilea Peperomioides', pot: 'mustard', deco: '', draw: pilea },
+    calathea: { label: 'Calathea Orbifolia', pot: 'cream', deco: '', draw: calathea },
+    pearls: { label: 'Erbsenpflanze', pot: 'cream', deco: 'stripe', after: true, draw: pearls },
+    cactus: { label: 'Kaktus', pot: 'terra', deco: 'band', draw: cactus }
+  };
+
+  function build(type, stage, wilt) {
+    const sp = SPECIES[type] || SPECIES.cactus, g = new Grid(), P = palette(wilt);
+    if (sp.after) { drawPot(g, sp.pot, sp.deco); sp.draw(g, stage, wilt, P); }
+    else { sp.draw(g, stage, wilt, P); drawPot(g, sp.pot, sp.deco); }
+    outline(g, P);
+    return g;
+  }
+
+  function toRGBA(g, bg) {
+    const out = new Uint8ClampedArray(W * H * 4), b = bg ? hex2rgb(bg) : null;
+    for (let i = 0; i < W * H; i++) {
+      const c = g.c[i] ? hex2rgb(g.c[i]) : b;
+      if (c) { out[i * 4] = c[0]; out[i * 4 + 1] = c[1]; out[i * 4 + 2] = c[2]; out[i * 4 + 3] = 255; }
+    }
+    return out;
+  }
+
+  const cache = {};
+  function spriteURL(type, stage, wilt) {
+    const wq = Math.round(clamp(wilt || 0, 0, 1) * 4) / 4, key = type + '|' + stage + '|' + wq;
+    if (!cache[key]) {
+      const c = document.createElement('canvas'); c.width = W; c.height = H;
+      const ctx = c.getContext('2d'), img = ctx.createImageData(W, H);
+      img.data.set(toRGBA(build(type, stage, wq)));
+      ctx.putImageData(img, 0, 0);
+      cache[key] = c.toDataURL('image/png');
+    }
+    return cache[key];
+  }
+
+  root.Sprites = { W, H, SPECIES, build, toRGBA, spriteURL };
+  if (typeof module !== 'undefined' && module.exports) module.exports = root.Sprites;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+/* Logik der Freundschafts-Pflanzen-App: keine Oberflaeche, nur Daten und Regeln. */
+(function (root) {
+  'use strict';
+  const DAY = 86400000;
+  const KEY = 'friendship-garden.v1';
+  const JOKERS = 3;
+  const GRADES = {
+    eng: { label: 'Enge Freundschaft', plural: 'Enge Freundschaften', days: 7 },
+    normal: { label: 'Normale Freundschaft', plural: 'Normale Freundschaften', days: 21 },
+    bekannt: { label: 'Bekanntschaft', plural: 'Bekanntschaften', days: 60 }
+  };
+  const GRADE_ORDER = ['eng', 'normal', 'bekannt'];
+  const TYPES = [{ id: 'nachricht', label: 'Nachricht' }, { id: 'anruf', label: 'Anruf' }, { id: 'treffen', label: 'Treffen' }];
+  const TYPE_LABEL = { nachricht: 'Nachricht', anruf: 'Anruf', treffen: 'Treffen' };
+  const PLANTS = ['monstera', 'snake', 'pilea', 'calathea', 'pearls', 'cactus'];
+  const STATE_LABEL = { bluehend: 'Blühend', gesund: 'Gesund', dringlich: 'Dringlich', verwelkt: 'Verwelkt', gerissen: 'Neu starten' };
+  const LEVEL_NAMES = ['Samen', 'Spross', 'Setzling', 'Gärtner:in', 'Beetkönig:in', 'Dschungel'];
+
+  let S = null;
+
+  /* ---------- Datum ---------- */
+  const startOfDay = ts => { const d = new Date(ts); d.setHours(0, 0, 0, 0); return d.getTime(); };
+  const todayTs = () => startOfDay(Date.now());
+  const addDays = (ts, n) => { const d = new Date(ts); d.setDate(d.getDate() + n); return startOfDay(d.getTime()); };
+  const dayDiff = (a, b) => Math.round((a - b) / DAY);
+  const iso = ts => { const d = new Date(ts); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+  const fromIso = s => { const p = String(s).split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]).getTime(); };
+  const monthKey = () => { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1); };
+  const uid = () => Math.random().toString(36).slice(2, 9) + Date.now().toString(36).slice(-4);
+
+  /* ---------- Zustand ---------- */
+  function newState() {
+    return {
+      v: 1, friends: [], jokers: { m: monthKey(), used: 0 },
+      stats: { waters: 0, meets: 0, revives: 0 }, badges: {},
+      settings: { weekly: true, lastWeekly: Date.now() }, demo: false
+    };
+  }
+  function load() {
+    try {
+      const t = localStorage.getItem(KEY);
+      if (t) { const s = JSON.parse(t); if (s && s.v === 1 && Array.isArray(s.friends)) return s; }
+    } catch (e) { /* Speicher gesperrt: App laeuft dann nur im Arbeitsspeicher */ }
+    return null;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ignorieren */ } }
+  const getState = () => S;
+  const setState = s => { S = s; };
+
+  /* ---------- Regeln ---------- */
+  const interval = f => f.custom || GRADES[f.grade].days;
+  const grace = f => Math.max(1, Math.round(interval(f) * 0.25));
+  const stageFor = streak => streak >= 8 ? 3 : streak >= 4 ? 2 : streak >= 2 ? 1 : 0;
+  const jokersLeft = () => Math.max(0, JOKERS - S.jokers.used);
+  const active = s => (s || S).friends.filter(f => !f.archived);
+
+  function info(f) {
+    const iv = interval(f), g = grace(f), since = dayDiff(todayTs(), f.lastWatered);
+    const overdue = since - iv, progress = since / iv;
+    let st;
+    if (overdue > g) st = 'gerissen';
+    else if (overdue > 0) st = 'verwelkt';
+    else if (progress >= 0.75) st = 'dringlich';
+    else if (progress >= 0.4) st = 'gesund';
+    else st = 'bluehend';
+    const wilt = st === 'gerissen' ? 1 : st === 'verwelkt' ? 0.75 + 0.25 * Math.min(1, overdue / g) : st === 'dringlich' ? 0.3 : 0;
+    const fresh = st === 'gerissen' ? 0 : st === 'verwelkt' ? 0.12 : Math.max(0.1, Math.min(1, 1 - progress));
+    return { st, since, overdue, iv, g, progress, wilt, fresh, stage: st === 'gerissen' ? 0 : stageFor(f.streak), left: iv - since };
+  }
+
+  function normalize() {
+    const mk = monthKey();
+    if (S.jokers.m !== mk) S.jokers = { m: mk, used: 0 };
+    S.friends.forEach(f => {
+      if (f.archived) return;
+      if (info(f).st === 'gerissen' && f.streak > 0) { f.streak = 0; f.broken = true; }
+    });
+  }
+
+  function newFriend(o) {
+    const t = todayTs();
+    return {
+      id: uid(), name: o.name, grade: o.grade, custom: o.custom || null, plant: o.plant, link: o.link || '',
+      streak: 0, best: 0, lastWatered: t, lastCounted: t, created: Date.now(), note: '',
+      archived: false, archivedAt: null, broken: false, history: []
+    };
+  }
+
+  /* Gießen. Rueckgabe beschreibt, was passiert ist (fuer die Meldung). */
+  function water(f, type, dateTs, useJoker) {
+    const t = todayTs();
+    dateTs = Math.min(startOfDay(dateTs), t);
+    const res = { grew: false, revived: false, reset: false, restarted: false };
+    f.history.unshift({ ts: dateTs, type });
+    f.history.sort((a, b) => b.ts - a.ts);
+    if (f.history.length > 60) f.history.length = 60;
+    S.stats.waters++;
+    if (type === 'treffen') S.stats.meets++;
+    if (dateTs > f.lastWatered) {
+      const iv = interval(f), g = grace(f);
+      const late = dayDiff(dateTs, addDays(f.lastWatered, iv));
+      if (late <= 0) {
+        const gap = dayDiff(dateTs, f.lastCounted);
+        if (f.streak === 0 || gap >= Math.max(1, Math.floor(iv / 2))) { f.streak++; f.lastCounted = dateTs; res.grew = true; }
+      } else if (late <= g && useJoker && jokersLeft() > 0) {
+        S.jokers.used++; S.stats.revives++; res.revived = true;
+        f.streak = Math.max(1, f.streak); f.lastCounted = dateTs;
+      } else {
+        res.reset = f.streak > 0; res.restarted = f.broken || f.streak === 0;
+        f.streak = 1; f.lastCounted = dateTs;
+      }
+      f.broken = false;
+      f.lastWatered = dateTs;
+      f.best = Math.max(f.best, f.streak);
+    }
+    save();
+    return res;
+  }
+
+  function archive(f) { f.archived = true; f.archivedAt = Date.now(); save(); }
+  function reactivate(f) {
+    const pause = Math.max(0, dayDiff(todayTs(), startOfDay(f.archivedAt || Date.now())));
+    const t = todayTs();
+    f.lastWatered = Math.min(t, addDays(f.lastWatered, pause));
+    f.lastCounted = Math.min(t, addDays(f.lastCounted, pause));
+    f.archived = false; f.archivedAt = null; save();
+  }
+  function remove(f) { S.friends = S.friends.filter(x => x !== f); save(); }
+
+  /* ---------- Abzeichen und Level ---------- */
+  const BADGES = [
+    { id: 'tropfen', name: 'Erster Tropfen', desc: 'Das erste Mal gemeldet.', test: s => s.stats.waters >= 1 },
+    { id: 'beet', name: 'Kleines Beet', desc: '3 Pflanzen im Garten.', test: s => active(s).length >= 3 },
+    { id: 'serie5', name: 'Durchhalten', desc: 'Ein Streak von 5.', test: s => active(s).some(f => f.streak >= 5) },
+    { id: 'daumen', name: 'Grüner Daumen', desc: '3 Freundschaften gleichzeitig mit Streak 3 oder mehr.', test: s => active(s).filter(f => f.streak >= 3).length >= 3 },
+    { id: 'oase', name: 'Oase', desc: '5 Freundschaften gleichzeitig mit Streak 3 oder mehr.', test: s => active(s).filter(f => f.streak >= 3).length >= 5 },
+    { id: 'treffen', name: 'Gesellig', desc: '5 persönliche Treffen eingetragen.', test: s => s.stats.meets >= 5 },
+    { id: 'rettung', name: 'Rettung', desc: 'Eine Pflanze wiederbelebt.', test: s => s.stats.revives >= 1 },
+    { id: 'baum', name: 'Baumriese', desc: 'Ein Streak von 12.', test: s => active(s).some(f => f.streak >= 12) }
+  ];
+  function checkBadges() {
+    const fresh = [];
+    BADGES.forEach(b => { if (!S.badges[b.id] && b.test(S)) { S.badges[b.id] = Date.now(); fresh.push(b); } });
+    if (fresh.length) save();
+    return fresh;
+  }
+  function levelInfo() {
+    const points = S.stats.waters + 5 * Object.keys(S.badges).length;
+    const level = 1 + Math.floor(points / 10);
+    return { points, level, name: LEVEL_NAMES[Math.min(level - 1, LEVEL_NAMES.length - 1)], into: (points % 10) / 10, toNext: 10 - (points % 10) };
+  }
+
+  /* ---------- Messenger-Link ---------- */
+  function cleanLink(s) {
+    s = String(s || '').trim();
+    if (!s) return { ok: true, value: '' };
+    if (/^\+?[\d\s\-()]{6,}$/.test(s)) {
+      let d = s.replace(/[^\d+]/g, '');
+      if (/^0(?!0)/.test(d)) return { ok: false, error: 'Bitte die Nummer mit Ländervorwahl eingeben, zum Beispiel +49 170 1234567.' };
+      d = d.replace(/^\+/, '').replace(/^00/, '');
+      if (d.length < 6 || d.length > 15) return { ok: false, error: 'Die Nummer sieht nicht richtig aus.' };
+      return { ok: true, value: 'https://wa.me/' + d };
+    }
+    if (/^(https?:\/\/|whatsapp:\/\/|tg:\/\/|sms:|signal:\/\/)/i.test(s)) return { ok: true, value: s.slice(0, 300) };
+    if (/^(wa\.me|t\.me|signal\.me)\//i.test(s)) return { ok: true, value: 'https://' + s.slice(0, 290) };
+    return { ok: false, error: 'Bitte eine Telefonnummer mit Ländervorwahl oder einen Link wie https://wa.me/49170… eingeben.' };
+  }
+
+  /* ---------- Sichern und Laden ---------- */
+  function cleanFriend(x) {
+    if (!x || typeof x !== 'object') return null;
+    const name = String(x.name || '').trim().slice(0, 24);
+    if (!name) return null;
+    const t = todayTs(), num = v => (Number.isFinite(+v) ? +v : 0);
+    const lw = Math.min(t, startOfDay(num(x.lastWatered) || t));
+    const f = {
+      id: String(x.id || uid()).slice(0, 40), name, grade: GRADES[x.grade] ? x.grade : 'normal',
+      custom: (+x.custom >= 1 && +x.custom <= 365) ? Math.round(+x.custom) : null,
+      plant: PLANTS.includes(x.plant) ? x.plant : 'cactus',
+      streak: Math.max(0, Math.round(num(x.streak))), best: 0, lastWatered: lw,
+      lastCounted: Math.min(t, startOfDay(num(x.lastCounted) || lw)), created: num(x.created) || Date.now(),
+      note: String(x.note || '').slice(0, 120), link: cleanLink(x.link).ok ? cleanLink(x.link).value : '',
+      archived: !!x.archived, archivedAt: x.archivedAt ? num(x.archivedAt) : null, broken: false,
+      history: Array.isArray(x.history) ? x.history.slice(0, 60).map(e => ({
+        ts: Math.min(t, startOfDay(num(e && e.ts) || t)), type: TYPE_LABEL[e && e.type] ? e.type : 'nachricht'
+      })) : []
+    };
+    f.best = Math.max(f.streak, Math.round(num(x.best)));
+    return f;
+  }
+  function cleanState(o) {
+    if (!o || typeof o !== 'object' || !Array.isArray(o.friends)) return null;
+    const s = newState(), num = v => Math.max(0, Math.round(Number.isFinite(+v) ? +v : 0));
+    s.friends = o.friends.slice(0, 200).map(cleanFriend).filter(Boolean);
+    if (o.jokers && o.jokers.m === s.jokers.m) s.jokers.used = Math.min(JOKERS, num(o.jokers.used));
+    if (o.stats) s.stats = { waters: num(o.stats.waters), meets: num(o.stats.meets), revives: num(o.stats.revives) };
+    if (o.badges && typeof o.badges === 'object') BADGES.forEach(b => { if (o.badges[b.id]) s.badges[b.id] = +o.badges[b.id] || Date.now(); });
+    if (o.settings) s.settings.weekly = o.settings.weekly !== false;
+    s.demo = false;
+    return s;
+  }
+
+  /* ---------- Beispieldaten ---------- */
+  function demoState() {
+    const s = newState(), t = todayTs();
+    const spec = [
+      ['Alex', 'eng', 'monstera', 1, 12, 'Wie war der Umzug?'],
+      ['Maya', 'eng', 'snake', 6, 5, 'Neuer Job, nach dem ersten Monat fragen.'],
+      ['Liam', 'normal', 'pilea', 10, 4, ''],
+      ['Chloe', 'eng', 'calathea', 9, 7, 'Konzertkarten für Juni?'],
+      ['Sam', 'bekannt', 'pearls', 12, 3, ''],
+      ['Jess', 'normal', 'cactus', 9, 2, 'Hat bald Geburtstag.']
+    ];
+    const types = ['nachricht', 'anruf', 'treffen', 'nachricht'];
+    spec.forEach((p, n) => {
+      const f = newFriend({ name: p[0], grade: p[1], plant: p[2] });
+      const iv = interval(f);
+      f.lastWatered = addDays(t, -p[3]); f.lastCounted = f.lastWatered;
+      f.streak = p[4]; f.best = p[4] + (n % 2) * 3; f.note = p[5]; f.created = Date.now() - 90 * DAY;
+      const count = Math.min(p[4], 5) + 1;
+      for (let i = 0; i < count; i++) f.history.push({ ts: addDays(f.lastWatered, -i * iv), type: types[(i + n) % 4] });
+      s.friends.push(f);
+      s.stats.waters += f.history.length;
+      s.stats.meets += f.history.filter(h => h.type === 'treffen').length;
+    });
+    s.demo = true;
+    return s;
+  }
+
+  function removeDemo() { S = newState(); save(); }
+
+  const api = {
+    DAY, KEY, JOKERS, GRADES, GRADE_ORDER, TYPES, TYPE_LABEL, PLANTS, STATE_LABEL, BADGES,
+    startOfDay, todayTs, addDays, dayDiff, iso, fromIso, uid,
+    newState, load, save, getState, setState, interval, grace, stageFor, jokersLeft, active, info, normalize,
+    newFriend, water, archive, reactivate, remove, checkBadges, levelInfo, cleanLink, cleanState, demoState, removeDemo
+  };
+  root.Logic = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+/* Oberflaeche der Freundschafts-Pflanzen-App. Baut alles mit h() auf, Namen und Notizen landen nie als HTML. */
+(function () {
+  'use strict';
+  const L = window.Logic, SP = window.Sprites;
+  const ui = { tab: 'garten' };
+  let sheetEl = null, lastFocus = null, toastTimer = null;
+
+  /* ---------- kleine Helfer ---------- */
+  function add(el, kids) {
+    for (const k of kids) {
+      if (k === null || k === undefined || k === false) continue;
+      if (Array.isArray(k)) add(el, k); else el.append(k.nodeType ? k : document.createTextNode(String(k)));
+    }
+  }
+  function h(tag, props, ...kids) {
+    const el = document.createElement(tag);
+    if (props) for (const k in props) {
+      const v = props[k];
+      if (v === null || v === undefined || v === false) continue;
+      if (k === 'class') el.className = v;
+      else if (k === 'on') for (const ev in v) el.addEventListener(ev, v[ev]);
+      else if (k === 'value' || k === 'checked' || k === 'disabled' || k === 'hidden') el[k] = v;
+      else el.setAttribute(k, v === true ? '' : v);
+    }
+    add(el, kids);
+    return el;
+  }
+
+  const ICONS = {
+    heart: ['.##...##.', '####.####', '#########', '#########', '.#######.', '..#####..', '...###...', '....#....'],
+    menu: ['#########', '.........', '#########', '.........', '#########'],
+    plus: ['...##...', '...##...', '...##...', '########', '########', '...##...', '...##...', '...##...'],
+    drop: ['....#....', '....#....', '...###...', '...###...', '..#####..', '.#######.', '.#######.', '.#######.', '..#####..'],
+    chat: ['.#######.', '#########', '#########', '#########', '.#######.', '..##.....', '.##......'],
+    home: ['....#....', '...###...', '..#####..', '.#######.', '#########', '.###.###.', '.###.###.', '.###.###.'],
+    box: ['#########', '#########', '.#######.', '.#######.', '.#.###.#.', '.#######.', '.#######.'],
+    star: ['....#....', '....#....', '...###...', '#########', '.#######.', '..#####..', '..##.##..', '.##...##.', '.#.....#.'],
+    close: ['##...##', '###.###', '.#####.', '..###..', '.#####.', '###.###', '##...##'],
+    check: ['.......##', '......###', '##...###.', '###.###..', '.#####...', '..###....', '...#.....']
+  };
+  function icon(name, size) {
+    const rows = ICONS[name], w = rows[0].length, ht = rows.length, NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg'), p = document.createElementNS(NS, 'path');
+    let d = '';
+    rows.forEach((r, y) => { const m = r.match(/#+/g); if (!m) return; let x = 0; r.replace(/(\.*)(#+)/g, (all, dots, hashes) => { x += dots.length; d += 'M' + x + ' ' + y + 'h' + hashes.length + 'v1h-' + hashes.length + 'z'; x += hashes.length; return all; }); });
+    p.setAttribute('d', d); p.setAttribute('fill', 'currentColor');
+    svg.append(p);
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + ht);
+    svg.setAttribute('width', w * size); svg.setAttribute('height', ht * size);
+    svg.setAttribute('aria-hidden', 'true');
+    return svg;
+  }
+
+  const S = () => L.getState();
+  const byId = id => S().friends.find(f => f.id === id);
+  const speciesLabel = k => (SP.SPECIES[k] || {}).label || k;
+  const fmtDate = ts => new Date(ts).toLocaleDateString('de-DE', { day: 'numeric', month: 'short' });
+  const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
+
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 3400);
+  }
+
+  function spriteImg(f, I, size) {
+    return h('img', { class: 'sprite', src: SP.spriteURL(f.plant, I.stage, I.wilt), alt: '', width: size || 144, height: size || 144, draggable: 'false' });
+  }
+  function pill(I) {
+    return h('span', { class: 'pill pill-' + I.st },
+      h('i', { style: 'width:' + Math.round(I.fresh * 100) + '%' }),
+      (I.st === 'dringlich' || I.st === 'verwelkt') && icon('drop', 1),
+      h('b', null, L.STATE_LABEL[I.st]));
+  }
+  function dueText(I) {
+    if (I.st === 'gerissen') return 'Streak gerissen';
+    if (I.left > 1) return 'in ' + I.left + ' Tagen';
+    if (I.left === 1) return 'morgen';
+    if (I.left === 0) return 'heute';
+    return 'seit ' + plural(-I.left, 'Tag', 'Tagen') + ' überfällig';
+  }
+
+  /* ---------- Sheets ---------- */
+  function closeSheet() {
+    if (!sheetEl) return;
+    sheetEl.remove(); sheetEl = null;
+    if (lastFocus && document.contains(lastFocus)) { try { lastFocus.focus(); } catch (e) { /* ignorieren */ } }
+  }
+  function openSheet(title, content) {
+    const prev = sheetEl; if (prev) { prev.remove(); sheetEl = null; } else lastFocus = document.activeElement;
+    const close = h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Schließen', on: { click: closeSheet } }, icon('close', 2));
+    const panel = h('div', { class: 'sheet px', role: 'dialog', 'aria-modal': 'true', 'aria-label': title },
+      h('div', { class: 'sheet-head' }, h('h2', null, title), close),
+      h('div', { class: 'sheet-body' }, content));
+    sheetEl = h('div', { class: 'overlay', on: { click: e => { if (e.target === sheetEl) closeSheet(); } } }, panel);
+    document.body.append(sheetEl);
+    close.focus({ preventScroll: true });
+  }
+
+  function confirmBtn(label, confirmLabel, onConfirm, cls) {
+    let armed = false, timer = null;
+    const b = h('button', { type: 'button', class: 'btn sm ' + (cls || ''), on: { click: () => {
+      if (!armed) { armed = true; b.textContent = confirmLabel; b.classList.add('danger'); timer = setTimeout(reset, 4500); }
+      else { clearTimeout(timer); onConfirm(); }
+    } } }, label);
+    function reset() { armed = false; b.textContent = label; b.classList.remove('danger'); }
+    return b;
+  }
+
+  function segmented(options, value, onChange, label) {
+    const wrap = h('div', { class: 'seg', role: 'radiogroup', 'aria-label': label });
+    const draw = () => wrap.replaceChildren(...options.map(o => h('button', {
+      type: 'button', class: 'seg-btn' + (o.id === value ? ' on' : ''), role: 'radio', 'aria-checked': String(o.id === value),
+      on: { click: () => { value = o.id; onChange(value); draw(); } }
+    }, o.label, o.sub && h('small', null, o.sub))));
+    draw();
+    return wrap;
+  }
+
+  /* ---------- Gießen ---------- */
+  function openWater(id) {
+    const f = byId(id); if (!f) return;
+    const I0 = L.info(f);
+    const d = { type: 'nachricht', date: L.todayTs(), joker: true };
+    const alertBox = h('div', { class: 'field', 'aria-live': 'polite' });
+    const dateIn = h('input', { id: 'w-date', type: 'date', value: L.iso(d.date), max: L.iso(L.todayTs()), min: L.iso(L.addDays(L.todayTs(), -365)) });
+
+    function refresh() {
+      const v = dateIn.value ? L.fromIso(dateIn.value) : L.todayTs();
+      d.date = Math.min(v, L.todayTs());
+      const g = L.grace(f), late = L.dayDiff(d.date, L.addDays(f.lastWatered, L.interval(f)));
+      const kids = [];
+      if (d.date <= f.lastWatered) kids.push(h('p', { class: 'muted' }, 'Das Datum liegt vor dem letzten Eintrag. Es wird nur in den Verlauf geschrieben, der Streak bleibt.'));
+      else if (late > 0 && late <= g) {
+        if (L.jokersLeft() > 0) {
+          const cb = h('input', { id: 'w-joker', type: 'checkbox', checked: d.joker, on: { change: e => { d.joker = e.target.checked; } } });
+          kids.push(h('p', null, 'Die Pflanze ist verwelkt. Mit einer Wiederbelebung bleibt dein Streak von ' + f.streak + ' erhalten.'),
+            h('label', { class: 'check', for: 'w-joker' }, cb, 'Wiederbelebung einsetzen (noch ' + L.jokersLeft() + ' von ' + L.JOKERS + ' in diesem Monat)'));
+        } else kids.push(h('p', null, 'Die Pflanze ist verwelkt und diesen Monat ist keine Wiederbelebung mehr frei. Der Streak startet neu.'));
+      } else if (late > g) kids.push(h('p', null, 'Der Streak ist gerissen. Mit diesem Eintrag wächst die Pflanze neu.'));
+      alertBox.replaceChildren(...kids);
+    }
+    dateIn.addEventListener('input', refresh);
+
+    const save = h('button', { type: 'button', class: 'btn primary full', on: { click: () => {
+      refresh();
+      const hadStreak = f.streak;
+      const r = L.water(f, d.type, d.date, d.joker);
+      closeSheet();
+      if (r.revived) toast('Wiederbelebt. Der Streak von ' + f.streak + ' bleibt.');
+      else if (r.reset) toast('Der Streak von ' + hadStreak + ' war gerissen. Neuer Anfang.');
+      else if (r.restarted) toast('Neuer Anfang für ' + f.name + '.');
+      else if (r.grew) toast('Gegossen. Streak ' + f.streak + '.');
+      else toast('Eingetragen.');
+      L.checkBadges().forEach((b, n) => setTimeout(() => toast('Neues Abzeichen: ' + b.name), 1700 * (n + 1)));
+      render();
+    } } }, icon('heart', 2), 'Eintragen');
+
+    openSheet('Gießen: ' + f.name, [
+      I0.st === 'gerissen' && h('p', { class: 'muted' }, 'Der Streak ist gerissen. Mit dem nächsten Eintrag wächst die Pflanze von vorn.'),
+      h('div', { class: 'field' }, h('span', { class: 'lbl' }, 'Wie hast du dich gemeldet?'),
+        segmented(L.TYPES, d.type, v => { d.type = v; }, 'Art des Kontakts')),
+      h('div', { class: 'field' }, h('label', { class: 'lbl', for: 'w-date' }, 'Wann?'), dateIn),
+      alertBox, save
+    ]);
+    refresh();
+  }
+
+  /* ---------- Detail ---------- */
+  function openDetail(id) {
+    const f = byId(id); if (!f) return;
+    const I = L.info(f);
+    const counter = h('span', { class: 'counter' }, f.note.length + '/120');
+    const note = h('textarea', { id: 'd-note', class: 'sticky', maxlength: '120', rows: '3', placeholder: 'Kurze Notiz, zum Beispiel ein Thema fürs nächste Melden', on: { input: e => { f.note = e.target.value.slice(0, 120); counter.textContent = f.note.length + '/120'; L.save(); } } });
+    note.value = f.note;
+
+    const hist = f.history.slice(0, 6);
+    const lk = f.link ? L.cleanLink(f.link) : { ok: false };
+    const safeLink = lk.ok ? lk.value : '';
+    const actions = h('div', { class: 'actions' },
+      h('button', { type: 'button', class: 'btn primary', on: { click: () => openWater(f.id) } }, icon('heart', 2), I.st === 'gerissen' ? 'Neu starten' : 'Gießen'),
+      safeLink
+        ? h('a', { class: 'btn', href: safeLink, target: '_blank', rel: 'noopener noreferrer' }, icon('chat', 2), 'Melden')
+        : h('button', { type: 'button', class: 'btn', on: { click: () => openEdit(f.id) } }, icon('chat', 2), 'Link anlegen'),
+      h('button', { type: 'button', class: 'btn sm', on: { click: () => openEdit(f.id) } }, 'Bearbeiten'),
+      h('button', { type: 'button', class: 'btn sm', on: { click: () => { L.archive(f); closeSheet(); toast(f.name + ' ist archiviert. Der Streak pausiert.'); render(); } } }, icon('box', 2), 'Archivieren'),
+      h('div', { class: 'full' }, confirmBtn('Endgültig löschen', 'Ja, jetzt löschen', () => { L.remove(f); closeSheet(); toast(f.name + ' wurde gelöscht.'); render(); }, 'full')));
+
+    openSheet(f.name, [
+      h('div', { class: 'd-top' },
+        h('div', { class: 'sprite-box px' }, spriteImg(f, I, 128)),
+        h('div', { class: 'd-info' }, h('h3', null, f.name), h('span', { class: 'muted' }, speciesLabel(f.plant) + ' · ' + L.GRADES[f.grade].label), pill(I))),
+      h('dl', { class: 'stats' },
+        h('div', { class: 'stat' }, h('dt', null, 'Streak'), h('dd', null, String(f.streak))),
+        h('div', { class: 'stat' }, h('dt', null, 'Bester Streak'), h('dd', null, String(f.best))),
+        h('div', { class: 'stat' }, h('dt', null, 'Nächstes Gießen'), h('dd', null, dueText(I))),
+        h('div', { class: 'stat' }, h('dt', null, 'Rhythmus'), h('dd', null, 'alle ' + plural(I.iv, 'Tag', 'Tage')))),
+      h('div', { class: 'field' }, h('label', { class: 'lbl', for: 'd-note' }, 'Notiz'), note, counter),
+      actions,
+      !safeLink && h('p', { class: 'muted' }, 'Mit einem WhatsApp-Link (zum Beispiel https://wa.me/49170…) öffnet „Melden“ direkt den Chat. Die App speichert sonst keine Kontaktdaten.'),
+      h('div', { class: 'field' }, h('span', { class: 'lbl' }, 'Verlauf'),
+        hist.length ? h('ul', { class: 'hist' }, hist.map(e => h('li', null, h('span', null, L.TYPE_LABEL[e.type]), h('span', { class: 'muted' }, fmtDate(e.ts))))) : h('p', { class: 'muted' }, 'Noch kein Eintrag.'))
+    ]);
+  }
+
+  /* ---------- Hinzufügen und Bearbeiten ---------- */
+  function nextPlant() {
+    const used = L.active().map(f => f.plant);
+    return L.PLANTS.find(p => !used.includes(p)) || L.PLANTS[L.active().length % L.PLANTS.length];
+  }
+  function openEdit(id) {
+    const f = id ? byId(id) : null;
+    const d = { grade: f ? f.grade : 'normal', plant: f ? f.plant : nextPlant(), customOn: !!(f && f.custom) };
+    const err = h('p', { class: 'err', role: 'alert' });
+    const nameIn = h('input', { id: 'e-name', type: 'text', maxlength: '24', autocomplete: 'off', placeholder: 'Vorname oder Spitzname', value: f ? f.name : '' });
+    const linkIn = h('input', { id: 'e-link', type: 'text', autocomplete: 'off', inputmode: 'url', placeholder: '+49 170 1234567 oder https://wa.me/…', value: f ? f.link : '' });
+    const numIn = h('input', { id: 'e-days', type: 'number', min: '1', max: '365', inputmode: 'numeric', value: f && f.custom ? String(f.custom) : '' });
+    const hint = h('p', { class: 'muted' });
+    const customBox = h('div', { class: 'field' });
+    const customCb = h('input', { id: 'e-custom', type: 'checkbox', checked: d.customOn, on: { change: e => { d.customOn = e.target.checked; drawCustom(); } } });
+    function drawHint() { hint.textContent = 'Standard bei dieser Kategorie: alle ' + plural(L.GRADES[d.grade].days, 'Tag', 'Tage') + '.'; }
+    function drawCustom() {
+      drawHint();
+      customBox.replaceChildren(h('label', { class: 'check', for: 'e-custom' }, customCb, 'Eigener Rhythmus statt Standard'), d.customOn && h('div', { class: 'field' }, h('label', { class: 'lbl', for: 'e-days' }, 'Alle wie viele Tage?'), numIn), hint);
+    }
+    const gradeSeg = segmented([{ id: 'eng', label: 'Eng', sub: '7 Tage' }, { id: 'normal', label: 'Normal', sub: '21 Tage' }, { id: 'bekannt', label: 'Bekannt', sub: '60 Tage' }], d.grade, v => { d.grade = v; drawHint(); }, 'Freundschaftsgrad');
+
+    const picker = h('div', { class: 'picker' });
+    function drawPicker() {
+      picker.replaceChildren(...L.PLANTS.map(p => h('button', { type: 'button', class: 'pick', 'aria-pressed': String(d.plant === p), on: { click: () => { d.plant = p; drawPicker(); } } },
+        h('img', { class: 'sprite', src: SP.spriteURL(p, 2, 0), alt: '', width: 72, height: 72 }), speciesLabel(p))));
+    }
+
+    const saveBtn = h('button', { type: 'button', class: 'btn primary full', on: { click: () => {
+      const name = nameIn.value.trim();
+      if (!name) { err.textContent = 'Bitte gib einen Namen ein.'; nameIn.focus(); return; }
+      const lk = L.cleanLink(linkIn.value);
+      if (!lk.ok) { err.textContent = lk.error; linkIn.focus(); return; }
+      let custom = null;
+      if (d.customOn) {
+        custom = Math.round(+numIn.value);
+        if (!(custom >= 1 && custom <= 365)) { err.textContent = 'Der Rhythmus muss zwischen 1 und 365 Tagen liegen.'; numIn.focus(); return; }
+      }
+      if (f) { Object.assign(f, { name, grade: d.grade, custom, plant: d.plant, link: lk.value }); L.save(); toast('Gespeichert.'); }
+      else {
+        L.getState().friends.push(L.newFriend({ name, grade: d.grade, custom, plant: d.plant, link: lk.value })); L.save();
+        toast(name + ' ist eingepflanzt.');
+        L.checkBadges().forEach((b, n) => setTimeout(() => toast('Neues Abzeichen: ' + b.name), 1700 * (n + 1)));
+      }
+      closeSheet(); render();
+    } } }, f ? 'Speichern' : 'Einpflanzen');
+
+    openSheet(f ? 'Bearbeiten' : 'Neue Pflanze', [
+      h('div', { class: 'field' }, h('label', { class: 'lbl', for: 'e-name' }, 'Name'), nameIn),
+      h('div', { class: 'field' }, h('span', { class: 'lbl' }, 'Freundschaftsgrad'), gradeSeg, customBox),
+      h('div', { class: 'field' }, h('span', { class: 'lbl' }, 'Pflanze'), picker),
+      h('div', { class: 'field' }, h('label', { class: 'lbl', for: 'e-link' }, 'Messenger-Link (optional)'), linkIn,
+        h('p', { class: 'muted' }, 'Telefonnummer mit Ländervorwahl oder ein Link. Daraus wird ein WhatsApp-Link, mehr speichert die App nicht.')),
+      err, saveBtn
+    ]);
+    drawCustom(); drawPicker();
+  }
+
+  /* ---------- Einstellungen ---------- */
+  function openSettings() {
+    const st = S();
+    const weekly = h('input', { id: 's-weekly', type: 'checkbox', checked: st.settings.weekly !== false, on: { change: e => { st.settings.weekly = e.target.checked; L.save(); } } });
+    const dataBox = h('div', { class: 'field' });
+    const msg = h('p', { class: 'muted', 'aria-live': 'polite' });
+
+    function showExport() {
+      const ta = h('textarea', { class: 'json', readonly: '', 'aria-label': 'Gesicherte Daten' }); ta.value = JSON.stringify(st);
+      const cp = h('button', { type: 'button', class: 'btn sm', on: { click: () => {
+        const ok = () => { msg.textContent = 'Kopiert. Füge den Text an einem sicheren Ort ein, zum Beispiel in eine Notiz.'; };
+        const fb = () => { ta.focus(); ta.select(); msg.textContent = 'Der Text ist markiert. Kopiere ihn mit „Kopieren“ deines Geräts.'; };
+        try { navigator.clipboard.writeText(ta.value).then(ok, fb); } catch (e) { fb(); }
+      } } }, 'Kopieren');
+      dataBox.replaceChildren(ta, cp, msg);
+    }
+    function showImport() {
+      const ta = h('textarea', { class: 'json', 'aria-label': 'Daten einfügen', placeholder: 'Gesicherten Text hier einfügen' });
+      const go = confirmBtn('Laden', 'Ja, aktuelle Daten ersetzen', () => {
+        let o = null; try { o = JSON.parse(ta.value); } catch (e) { /* unten melden */ }
+        const clean = L.cleanState(o);
+        if (!clean) { msg.textContent = 'Das sieht nicht nach gesicherten Daten aus.'; return; }
+        L.setState(clean); L.normalize(); L.checkBadges(); L.save(); closeSheet(); toast('Daten geladen.'); render();
+      });
+      dataBox.replaceChildren(ta, go, msg);
+    }
+
+    const urgent = L.active().filter(f => ['dringlich', 'verwelkt'].includes(L.info(f).st)).length;
+    openSheet('Einstellungen', [
+      h('div', { class: 'sec' }, h('span', { class: 'lbl' }, 'Wiederbelebungen'),
+        h('p', null, 'Diesen Monat noch ' + L.jokersLeft() + ' von ' + L.JOKERS + ' frei. Der Vorrat gilt für alle Freundschaften zusammen.')),
+      h('div', { class: 'sec' }, h('span', { class: 'lbl' }, 'Benachrichtigungen'),
+        h('label', { class: 'check', for: 's-weekly' }, weekly, 'Wochenübersicht anzeigen'),
+        h('p', { class: 'muted' }, 'Die Übersicht erscheint einmal pro Woche, wenn du die App öffnest. Eine Warnung kurz vor dem Verwelken, die dich auch bei geschlossener App erreicht, braucht eine native App oder einen Push-Dienst. Hier siehst du dringende Pflanzen oben im Garten.'),
+        h('button', { type: 'button', class: 'btn sm', on: { click: () => openWeekly(true) } }, 'Übersicht jetzt ansehen' + (urgent ? ' (' + urgent + ')' : ''))),
+      h('div', { class: 'sec' }, h('span', { class: 'lbl' }, 'Daten'),
+        h('p', { class: 'muted' }, 'Alles liegt nur auf diesem Gerät, in diesem Browser. Sichere die Daten regelmäßig, sonst gehen sie mit dem Browser-Speicher verloren.'),
+        h('div', { class: 'row' }, h('button', { type: 'button', class: 'btn sm', on: { click: showExport } }, 'Daten sichern'), h('button', { type: 'button', class: 'btn sm', on: { click: showImport } }, 'Daten laden')),
+        dataBox),
+      st.demo && h('div', { class: 'sec' }, h('span', { class: 'lbl' }, 'Beispieldaten'), h('p', { class: 'muted' }, 'Du siehst gerade sechs Beispiel-Pflanzen.'),
+        confirmBtn('Beispiele entfernen', 'Ja, Garten leeren', () => { L.removeDemo(); closeSheet(); toast('Dein Garten ist leer. Pflanze die erste Freundschaft.'); render(); }))
+    ]);
+  }
+
+  function openWeekly(manual) {
+    const list = L.active().map(f => ({ f, I: L.info(f) })).filter(x => ['dringlich', 'verwelkt', 'gerissen'].includes(x.I.st)).sort((a, b) => b.I.progress - a.I.progress);
+    openSheet('Diese Woche', [
+      list.length ? h('p', null, plural(list.length, 'Pflanze braucht', 'Pflanzen brauchen') + ' Aufmerksamkeit:') : h('p', null, manual ? 'Alle Pflanzen sind versorgt. Nichts zu tun.' : 'Alle Pflanzen sind versorgt.'),
+      list.length && h('ul', { class: 'plain-list' }, list.map(x => h('li', null, h('b', null, x.f.name), h('span', { class: 'muted' }, dueText(x.I))))),
+      list.length && h('button', { type: 'button', class: 'btn primary full', on: { click: () => { closeSheet(); ui.tab = 'garten'; render(); } } }, 'Zum Garten')
+    ]);
+  }
+  function weeklyCheck() {
+    const st = S();
+    if (st.settings.weekly === false || Date.now() - (st.settings.lastWeekly || 0) < 7 * L.DAY) return;
+    st.settings.lastWeekly = Date.now(); L.save();
+    if (L.active().some(f => ['dringlich', 'verwelkt', 'gerissen'].includes(L.info(f).st))) openWeekly(false);
+  }
+
+  /* ---------- Ansichten ---------- */
+  const byUrgency = (a, b) => L.info(b).progress - L.info(a).progress || a.name.localeCompare(b.name, 'de');
+
+  function card(f) {
+    const I = L.info(f);
+    const open = () => openDetail(f.id);
+    return h('div', { class: 'card px', role: 'button', tabindex: '0', 'aria-label': f.name + ', ' + L.STATE_LABEL[I.st] + ', ' + speciesLabel(f.plant),
+      on: { click: open, keydown: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } } } },
+      h('div', { class: 'sprite-box' }, spriteImg(f, I), f.streak > 0 && h('span', { class: 'streak px-s', 'aria-label': 'Streak ' + f.streak }, icon('drop', 2), String(f.streak))),
+      h('div', { class: 'species' }, speciesLabel(f.plant)),
+      h('div', { class: 'name-row' }, h('span', { class: 'fname' }, f.name), pill(I)),
+      h('button', { type: 'button', class: 'btn sm', on: { click: e => { e.stopPropagation(); openWater(f.id); } } }, icon('heart', 2), I.st === 'gerissen' ? 'Neu starten' : 'Gießen'));
+  }
+  function group(title, list, cls, ic) {
+    return h('section', { class: 'group ' + (cls || '') },
+      h('h2', { class: 'group-title' }, ic && icon(ic, 2), title, h('span', { class: 'count' }, String(list.length))),
+      h('div', { class: 'grid' }, list.map(card)));
+  }
+
+  function viewGarden() {
+    const act = L.active(), wrap = h('div', { class: 'wrap' });
+    if (S().demo) wrap.append(h('div', { class: 'banner' }, h('p', null, 'Das sind Beispieldaten zum Ausprobieren.'),
+      h('button', { type: 'button', class: 'btn sm', on: { click: openSettings } }, 'Entfernen')));
+    if (!act.length) {
+      wrap.append(h('div', { class: 'empty' }, h('img', { class: 'sprite', src: SP.spriteURL('cactus', 0, 0), alt: '', width: 120, height: 120 }),
+        h('h2', null, 'Dein Garten ist leer'), h('p', { class: 'muted' }, 'Jede Freundschaft ist eine Pflanze. Pflanze die erste.'),
+        h('button', { type: 'button', class: 'btn primary', on: { click: () => openEdit() } }, icon('plus', 2), 'Freundschaft hinzufügen')));
+      return wrap;
+    }
+    const urgent = act.filter(f => ['dringlich', 'verwelkt'].includes(L.info(f).st)).sort(byUrgency);
+    const rest = act.filter(f => !urgent.includes(f));
+    if (urgent.length) wrap.append(group('Dringlich', urgent, 'urgent', 'drop'));
+    L.GRADE_ORDER.forEach(g => {
+      const list = rest.filter(f => f.grade === g).sort(byUrgency);
+      if (list.length) wrap.append(group(L.GRADES[g].plural, list));
+    });
+    return wrap;
+  }
+
+  function viewArchive() {
+    const list = S().friends.filter(f => f.archived), wrap = h('div', { class: 'wrap' });
+    wrap.append(h('p', { class: 'muted' }, 'Archivierte Freundschaften sind pausiert. Beim Reaktivieren läuft der Rhythmus dort weiter, wo er stand.'));
+    if (!list.length) { wrap.append(h('p', null, 'Das Archiv ist leer.')); return wrap; }
+    list.forEach(f => {
+      const I = L.info(f);
+      wrap.append(h('div', { class: 'arch px' }, h('img', { class: 'sprite', src: SP.spriteURL(f.plant, I.stage, 0), alt: '', width: 64, height: 64 }),
+        h('div', { class: 'who' }, h('b', null, f.name), h('span', { class: 'muted' }, 'Pausiert seit ' + fmtDate(f.archivedAt || Date.now()) + ' · Streak ' + f.streak)),
+        h('div', { class: 'btns' },
+          h('button', { type: 'button', class: 'btn sm primary', on: { click: () => { L.reactivate(f); toast(f.name + ' ist zurück im Garten.'); render(); } } }, 'Reaktivieren'),
+          confirmBtn('Löschen', 'Sicher?', () => { L.remove(f); toast(f.name + ' wurde gelöscht.'); render(); }))));
+    });
+    return wrap;
+  }
+
+  function viewBadges() {
+    const lv = L.levelInfo(), st = S(), wrap = h('div', { class: 'wrap' });
+    const hearts = h('div', { class: 'hearts', role: 'img', 'aria-label': 'Wiederbelebungen: ' + L.jokersLeft() + ' von ' + L.JOKERS + ' frei' });
+    for (let i = 0; i < L.JOKERS; i++) hearts.append(h('span', { class: 'heart' + (i < L.jokersLeft() ? ' on' : '') }, icon('heart', 3)));
+    wrap.append(h('section', { class: 'lvl px' }, h('span', { class: 'lbl' }, 'Level ' + lv.level), h('h3', null, lv.name),
+      h('div', { class: 'meter px-s', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '10', 'aria-valuenow': String(10 - lv.toNext), 'aria-label': 'Fortschritt zum nächsten Level' }, h('i', { style: 'width:' + Math.round(lv.into * 100) + '%' })),
+      h('p', { class: 'muted' }, 'Noch ' + lv.toNext + ' Punkte bis Level ' + (lv.level + 1) + '. Jeder Eintrag zählt 1, jedes Abzeichen 5.')));
+    wrap.append(h('section', { class: 'group' }, h('h2', { class: 'group-title' }, 'Wiederbelebungen'), hearts,
+      h('p', { class: 'muted' }, 'Pro Monat gibt es ' + L.JOKERS + '. Sie retten einen Streak, kurz nachdem die Pflanze verwelkt ist.')));
+    wrap.append(h('section', { class: 'group' }, h('h2', { class: 'group-title' }, 'Abzeichen', h('span', { class: 'count' }, Object.keys(st.badges).length + '/' + L.BADGES.length)),
+      h('div', { class: 'badges' }, L.BADGES.map(b => {
+        const got = !!st.badges[b.id];
+        return h('div', { class: 'badge px' + (got ? '' : ' locked') }, icon('star', 3), h('h3', null, b.name), h('p', null, b.desc), h('p', null, got ? 'Erreicht' : 'Noch offen'));
+      }))));
+    return wrap;
+  }
+
+  /* ---------- Rahmen ---------- */
+  const TABS = [['garten', 'Garten', 'home'], ['archiv', 'Archiv', 'box'], ['abzeichen', 'Abzeichen', 'star']];
+  function buildChrome() {
+    document.getElementById('menu').append(icon('menu', 3));
+    document.getElementById('add').append(icon('plus', 3));
+    document.getElementById('menu').addEventListener('click', openSettings);
+    document.getElementById('add').addEventListener('click', () => openEdit());
+    document.getElementById('tabs').replaceChildren(...TABS.map(t => h('button', { type: 'button', class: 'tab', 'data-tab': t[0], on: { click: () => { ui.tab = t[0]; render(); document.getElementById('main').scrollTop = 0; } } }, h('span', { class: 'ic' }, icon(t[2], 3)), t[1])));
+  }
+  function render() {
+    const main = document.getElementById('main'), top = main.scrollTop;
+    document.querySelectorAll('.tab').forEach(b => { if (b.dataset.tab === ui.tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+    main.replaceChildren(ui.tab === 'archiv' ? viewArchive() : ui.tab === 'abzeichen' ? viewBadges() : viewGarden());
+    main.scrollTop = top;
+  }
+
+  function boot() {
+    L.setState(L.load() || L.demoState());
+    L.normalize(); L.checkBadges(); L.save();
+    buildChrome(); render(); weeklyCheck();
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) { L.normalize(); L.save(); render(); } });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+  }
+  boot();
+})();
+
+</script>
+<script>
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+}
+</script>
+</body>
+</html>
